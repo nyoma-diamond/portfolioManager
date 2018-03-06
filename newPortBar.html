@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    Portfolio Name: <br /> 
+    <input type="text" id="newPortName"> <br />
+    Account Creation Date: <br />
+    <input type="text" id="creDate"> <br />
+    Initial Cash: <br />
+    <input type="text" id="inCash"> <br />
+    Yearly Interest Rate on Cash: <br />
+    <input type="text" id="intRate"> <br />
+    Interest Compounding Frequency (per year): <br />
+    <input type="text" id="compFreq">
+    <br /><br />
+    
+    <script>
+      var newPortName;
+      var inCash;
+      var creDate;
+      var intRate;
+      var compFreq;
+      
+      function runOutput() {
+        newPortName = document.getElementById("newPortName").value;
+        creDate = document.getElementById("creDate").value;
+        inCash = document.getElementById("inCash").value;
+        intRate = document.getElementById("intRate").value;
+        compFreq = document.getElementById("compFreq").value;
+        
+        google.script.run.newPort(newPortName, inCash, creDate, intRate, compFreq);
+        }
+      
+      function clearInputs() {
+        document.getElementById("newPortName").value = "";
+        document.getElementById("creDate").value = "";
+        document.getElementById("inCash").value = "";
+        document.getElementById("intRate").value = "";
+        document.getElementById("compFreq").value = "";
+      }
+    </script>
+      
+    <input type="button" value="Submit" onClick="runOutput();" />
+    <input type="button" value="Reset" onClick="clearInputs();" />
+  </body>
+</html>

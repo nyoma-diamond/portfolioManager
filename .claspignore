@@ -1,0 +1,7 @@
+**/node_modules/**
+.clasp.json
+.claspignore
+package-lock.json
+package.json
+yarn-error.log
+yarn.lock
