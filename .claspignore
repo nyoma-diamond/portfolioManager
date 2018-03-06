@@ -1,7 +1,12 @@
+**/.vscode/**
 **/node_modules/**
+**/ts/**
 .clasp.json
 .claspignore
+.gitignore
+LICENSE
 package-lock.json
 package.json
+tsconfig.json
 yarn-error.log
 yarn.lock
