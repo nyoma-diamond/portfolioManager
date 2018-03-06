@@ -1,0 +1,15 @@
+{
+	"compilerOptions":
+	{
+		"module": "none",
+		"target": "es3",
+		"noImplicitAny": false,
+		"sourceMap": false,
+		"outDir": "gs"
+	},
+
+	"include":
+	[
+		"ts/**/*"
+	]
+}
