@@ -1,5 +1,5 @@
 function newStock() {
-  var html = HtmlService.createHtmlOutputFromFile("newStockBar")
+  var html = HtmlService.createHtmlOutputFromFile("html/newStockBar")
       .setTitle("Portfolio Management")
       .setWidth(300);
   SpreadsheetApp.getUi()

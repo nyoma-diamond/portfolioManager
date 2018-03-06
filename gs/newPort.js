@@ -1,5 +1,5 @@
 function newPortBar() {
-  var html = HtmlService.createHtmlOutputFromFile("newPortBar")
+  var html = HtmlService.createHtmlOutputFromFile("html/newPortBar")
       .setTitle("Portfolio Management")
       .setWidth(300);
   SpreadsheetApp.getUi()
