@@ -1,14 +1,14 @@
 function recordHistory(histSheet) {
-	var values = histSheet.getRange("A2:B2").getValues();
-	var date = new Date();
-	var month = date.getMonth()+1;
-	var day = date.getDate();
-	var year = date.getFullYear();
-	var isFriday = date.getDay() == 5;
+	let values = histSheet.getRange("A2:B2").getValues();
+	let date = new Date();
+	let month = date.getMonth()+1;
+	let day = date.getDate();
+	let year = date.getFullYear();
+	let isFriday = date.getDay() == 5;
 	values[0][0] = month + "/" + day + "/" + year;
 
 	histSheet.insertRowBefore(3);
-	var newRow = histSheet.getRange("A3:B3");
+	let newRow = histSheet.getRange("A3:B3");
 	newRow.setValues(values);
 	newRow.setNumberFormats([["mm/dd/yyyy", "\"$\"#,##0.00"]]);
 
@@ -18,22 +18,22 @@ function recordHistory(histSheet) {
 		histSheet.getRange("B3").copyTo(histSheet.getRange("C3"));
 	}*/
 
-	var rowCount = histSheet.getMaxRows();
+	let rowCount = histSheet.getMaxRows();
 	if (rowCount > 366) {
 		histSheet.deleteRows(367,rowCount-366);
 	}
 }
 
 function recordAllHistory() {
-	var allSheets = ss.getSheets();
+	let allSheets = ss.getSheets();
 
-	var allHistSheets = allSheets.filter(
+	let allHistSheets = allSheets.filter(
 		function(entry) {
 			return entry.getName().indexOf(" History") > -1
 		}
 	);
 
-	for (var i = 0; i < allHistSheets.length; i++) {
+	for (let i = 0; i < allHistSheets.length; i++) {
 		recordHistory(allHistSheets[i]);
 	}
 }

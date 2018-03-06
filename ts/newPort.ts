@@ -1,5 +1,5 @@
 function newPortBar() {
-	var html = HtmlService.createHtmlOutputFromFile("html/newPortBar")
+	let html = HtmlService.createHtmlOutputFromFile("html/newPortBar")
 			.setTitle("Portfolio Management")
 			.setWidth(300);
 	SpreadsheetApp.getUi()
@@ -22,18 +22,18 @@ function newPort(newPortName, inCash, creDate, intRate, compFreq) {
 
 function insertPortBase(newPortName, inCash, creDate) {
 	ss.insertSheet(newPortName);
-	var newSheet = ss.getSheetByName(newPortName);
-	var rowCount = newSheet.getMaxRows();
-	var columnCount = newSheet.getMaxColumns();
+	let newSheet = ss.getSheetByName(newPortName);
+	let rowCount = newSheet.getMaxRows();
+	let columnCount = newSheet.getMaxColumns();
 	newSheet.deleteRows(6, rowCount-5);
 	newSheet.deleteColumns(20, columnCount-19);
-	var wholeSheet = newSheet.getRange("A1:S6");
-	var legendRow = newSheet.getRange("A1:S1");
-	var bottom = newSheet.getRange("A5:S6");
-	var portSumm = newSheet.getRange("A5:S5");
-	var indexRow = newSheet.getRange("A6:S6");
+	let wholeSheet = newSheet.getRange("A1:S6");
+	let legendRow = newSheet.getRange("A1:S1");
+	let bottom = newSheet.getRange("A5:S6");
+	let portSumm = newSheet.getRange("A5:S5");
+	let indexRow = newSheet.getRange("A6:S6");
 
-	var legend = [
+	let legend = [
 		"Ticker",
 		"Company Name",
 		"Date Obtained",
@@ -55,7 +55,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Sector"
 	];
 
-	var portSummVal = [
+	let portSummVal = [
 		"Total",
 		newPortName,
 		creDate,
@@ -77,7 +77,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"portfolio"
 	];
 
-	var inx = [
+	let inx = [
 		".INX",
 		"=GOOGLEFINANCE(A6, \"name\")",
 		creDate,
@@ -99,7 +99,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Index"
 	];
 
-	var horAligns = [
+	let horAligns = [
 		"left",
 		"left",
 		"right",
@@ -141,36 +141,36 @@ function insertPortBase(newPortName, inCash, creDate) {
 
 	//CONDITIONAL FORMATTING GOES HERE
 
-	for (var i = 1; i <= 19; i++) {
+	for (let i = 1; i <= 19; i++) {
 		newSheet.autoResizeColumn(i);
 	}
 
-		for (var i = 2; i <= 6; i++) {
+		for (let i = 2; i <= 6; i++) {
 		newSheet.getRange(i,1,1,19).setNumberFormats([formats]);
 		newSheet.getRange(i,1,1,19).setHorizontalAlignments([horAligns]);
 	}
 
-	for (var i = 1; i <= 4; i++) {
+	for (let i = 1; i <= 4; i++) {
 		newSheet.setRowHeight(i, 25);
 	}
 
-	for (var i = 5; i <= 6; i++) {
+	for (let i = 5; i <= 6; i++) {
 		newSheet.setRowHeight(i, 50);
 	}
 }
 
 function insertHistory(newPortName) {
 	ss.insertSheet(newPortName+" History");
-	var newHist = ss.getSheetByName(newPortName+" History");
+	let newHist = ss.getSheetByName(newPortName+" History");
 
-	var rowCount = newHist.getMaxRows();
-	var columnCount = newHist.getMaxColumns();
+	let rowCount = newHist.getMaxRows();
+	let columnCount = newHist.getMaxColumns();
 	newHist.deleteRows(3, rowCount-2);
 	newHist.deleteColumns(4, columnCount-3);
 
-	var wholeHist = newHist.getRange("A1:C3");
-	var topRow = newHist.getRange("A1:C1");
-	var curRow = newHist.getRange("A2:C2");
+	let wholeHist = newHist.getRange("A1:C3");
+	let topRow = newHist.getRange("A1:C1");
+	let curRow = newHist.getRange("A2:C2");
 
 	topRow.setValues([["Date (mm/dd/yyyy)", "Portfolio Value", "Portfolio Value (Fridays only)"]])
 	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", "='"+newPortName+"'!H5", ""]])
@@ -182,17 +182,17 @@ function insertHistory(newPortName) {
 	curRow.setNumberFormats([["\"text\"", "\"$\"#,##0.00",  "\"$\"#,##0.00"]]);
 	curRow.setHorizontalAlignment("right");
 
-	for (var i = 1; i <= 3; i++) {
+	for (let i = 1; i <= 3; i++) {
 		newHist.autoResizeColumn(i);
 	}
 
-	for (var i = 1; i <= 2; i++) {
+	for (let i = 1; i <= 2; i++) {
 		newHist.setRowHeight(i, 21);
 	}
 }
 
 function insertUtil(newPortName, intRate, compFreq) {
 	ss.insertSheet(newPortName+" Utility");
-	var newUtil = ss.getSheetByName(newPortName+" Utility");
+	let newUtil = ss.getSheetByName(newPortName+" Utility");
 
 }

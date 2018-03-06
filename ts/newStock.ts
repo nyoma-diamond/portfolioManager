@@ -1,5 +1,5 @@
 function newStock() {
-	var html = HtmlService.createHtmlOutputFromFile("html/newStockBar")
+	let html = HtmlService.createHtmlOutputFromFile("html/newStockBar")
 			.setTitle("Portfolio Management")
 			.setWidth(300);
 	SpreadsheetApp.getUi()
@@ -7,17 +7,17 @@ function newStock() {
 }
 
 function submitCheck(portName, ticker, dateStr, quantityStr, priceStr) {
-	var date = Date.parse(dateStr);
-	var quantity = Number(quantityStr);
-	var price = Number(priceStr);
+	let date = Date.parse(dateStr);
+	let quantity = Number(quantityStr);
+	let price = Number(priceStr);
 
-	var portTitle = " Portfolio Name";
-	var tickerTitle = " Ticker";
-	var dateTitle = " Date Obtained";
-	var quantityTitle = " Quantity";
-	var priceTitle = " Price per Share";
+	let portTitle = " Portfolio Name";
+	let tickerTitle = " Ticker";
+	let dateTitle = " Date Obtained";
+	let quantityTitle = " Quantity";
+	let priceTitle = " Price per Share";
 
-	var validMap = { };
+	let validMap = { };
 
 	validMap[portTitle] = checkSheetExist(portName) ? true : portTitle;
 	validMap[tickerTitle] = (ticker != "") ? true : tickerTitle;
@@ -25,8 +25,8 @@ function submitCheck(portName, ticker, dateStr, quantityStr, priceStr) {
 	validMap[quantityTitle] = (quantity > 0 && quantityStr != "") ? true : quantityTitle;
 	validMap[priceTitle] = (price >= 0 && priceStr != "") ? true : priceTitle;
 
-	var badIn = [];
-	for (var key in validMap) {
+	let badIn = [];
+	for (let key in validMap) {
 		if (validMap[key] !== true) {
 			badIn.push(key);
 		}
@@ -41,10 +41,10 @@ function submitCheck(portName, ticker, dateStr, quantityStr, priceStr) {
 }
 
 function newStockOutput(portName, ticker, date, quantity, price) {
-	var sheet = ss.getSheetByName(portName);
+	let sheet = ss.getSheetByName(portName);
 	SpreadsheetApp.setActiveSheet(sheet);
 
-	var newData = [
+	let newData = [
 		ticker,
 		"=GOOGLEFINANCE($A2, \"name\")",
 		date,
