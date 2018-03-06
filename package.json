@@ -1,5 +1,5 @@
 {
-  "dependencies": {
-    "@types/google-apps-script": "^0.0.21"
-  }
+	"dependencies": {
+		"@types/google-apps-script": "^0.0.21"
+	}
 }

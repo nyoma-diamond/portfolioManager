@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <body>
-      <p>Portfolio:</p>
-      <input type="text" id="portName">
-      <br /><br />
-  
-      <p>Ticker:</p>
-      <input type="text" id="ticker">
-      <br /><br />
-      
-      <p>Date obtained (dd/mm/yyyy):</p> 
-      <input type="text" id="date">
-      <br /><br />
-      
-      <p>Quantity:</p> 
-      <input type="number" id="quantity">
-      <br /><br />
-      
-      <p>Price per share ($):</p> 
-      <input type="number" id="price">
-      <br /><br />
-      
-      <script>
-      var ticker;
-      var date;
-      var quantity;
-      var price;
-      
-      function submit() {
-        portName = document.getElementById("portName").value;
-        
-        ticker = document.getElementById("ticker").value;
-        
-        date = document.getElementById("date").value;
-          
-        quantity = document.getElementById("quantity").value;
-         
-        price = document.getElementById("price").value;
-      
-        google.script.run.submitCheck(portName, ticker, date, quantity, price);
-      }
-       
-      function clearInputs() {
-        document.getElementById("portName").value = "";
-        document.getElementById("ticker").value = "";
-        document.getElementById("date").value = "";
-        document.getElementById("quantity").value = "";
-        document.getElementById("price").value = "";
-      }
-      </script>
-      
-      <input type="button" value="Submit" onClick="submit();" />
-      <input type="button" value="Reset" onClick="clearInputs();" />
-  </body>
+	<body>
+			<p>Portfolio:</p>
+			<input type="text" id="portName">
+			<br /><br />
+
+			<p>Ticker:</p>
+			<input type="text" id="ticker">
+			<br /><br />
+
+			<p>Date obtained (dd/mm/yyyy):</p>
+			<input type="text" id="date">
+			<br /><br />
+
+			<p>Quantity:</p>
+			<input type="number" id="quantity">
+			<br /><br />
+
+			<p>Price per share ($):</p>
+			<input type="number" id="price">
+			<br /><br />
+
+			<script>
+			var ticker;
+			var date;
+			var quantity;
+			var price;
+
+			function submit() {
+				portName = document.getElementById("portName").value;
+
+				ticker = document.getElementById("ticker").value;
+
+				date = document.getElementById("date").value;
+
+				quantity = document.getElementById("quantity").value;
+
+				price = document.getElementById("price").value;
+
+				google.script.run.submitCheck(portName, ticker, date, quantity, price);
+			}
+
+			function clearInputs() {
+				document.getElementById("portName").value = "";
+				document.getElementById("ticker").value = "";
+				document.getElementById("date").value = "";
+				document.getElementById("quantity").value = "";
+				document.getElementById("price").value = "";
+			}
+			</script>
+
+			<input type="button" value="Submit" onClick="submit();" />
+			<input type="button" value="Reset" onClick="clearInputs();" />
+	</body>
 </html>
