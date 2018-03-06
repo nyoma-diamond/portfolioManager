@@ -17,7 +17,6 @@ function newPort(newPortName, inCash, creDate, intRate, compFreq) {
 		SpreadsheetApp.getUi().alert(newPortName+" already exists")
 		return;
 	}
-
 }
 
 function insertPortBase(newPortName, inCash, creDate) {
@@ -145,7 +144,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		newSheet.autoResizeColumn(i);
 	}
 
-		for (let i = 2; i <= 6; i++) {
+	for (let i = 2; i <= 6; i++) {
 		newSheet.getRange(i,1,1,19).setNumberFormats([formats]);
 		newSheet.getRange(i,1,1,19).setHorizontalAlignments([horAligns]);
 	}
@@ -194,5 +193,4 @@ function insertHistory(newPortName) {
 function insertUtil(newPortName, intRate, compFreq) {
 	ss.insertSheet(newPortName+" Utility");
 	let newUtil = ss.getSheetByName(newPortName+" Utility");
-
 }
