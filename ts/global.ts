@@ -1,7 +1,7 @@
-let ss = SpreadsheetApp.getActiveSpreadsheet();
+const ss = SpreadsheetApp.getActiveSpreadsheet();
 
 function onOpen() {
-	let portManMen = SpreadsheetApp.getUi().createMenu("Portfolio Management");
+	const portManMen = SpreadsheetApp.getUi().createMenu("Portfolio Management");
 	portManMen.addItem("New Stock", "newStock").addToUi();
 	portManMen.addItem("New Portfolio", "newPortBar").addToUi();
 	portManMen.addItem("Base Test", "insertPortBase").addToUi();
@@ -14,7 +14,7 @@ function testAlert(input) {
 }
 
 function badInput(badIn) {
-	let ui = SpreadsheetApp.getUi();
+	const ui = SpreadsheetApp.getUi();
 	if (badIn.length == 1) {
 		ui.alert("Error", "The following input was invalid:\n"+badIn.toString(), ui.ButtonSet.OK);
 	}
@@ -32,7 +32,7 @@ function checkSheetExist(nameIn) {
 	}
 }
 
-let formats = [
+const formats = [
 	"\"text\"",
 	"\"text\"",
 	"mm/dd/yyyy",

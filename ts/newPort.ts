@@ -1,5 +1,5 @@
 function newPortBar() {
-	let html = HtmlService.createHtmlOutputFromFile("html/newPortBar")
+	const html = HtmlService.createHtmlOutputFromFile("html/newPortBar")
 			.setTitle("Portfolio Management")
 			.setWidth(300);
 	SpreadsheetApp.getUi()
@@ -21,18 +21,18 @@ function newPort(newPortName, inCash, creDate, intRate, compFreq) {
 
 function insertPortBase(newPortName, inCash, creDate) {
 	ss.insertSheet(newPortName);
-	let newSheet = ss.getSheetByName(newPortName);
-	let rowCount = newSheet.getMaxRows();
-	let columnCount = newSheet.getMaxColumns();
+	const newSheet = ss.getSheetByName(newPortName);
+	const rowCount = newSheet.getMaxRows();
+	const columnCount = newSheet.getMaxColumns();
 	newSheet.deleteRows(6, rowCount-5);
 	newSheet.deleteColumns(20, columnCount-19);
-	let wholeSheet = newSheet.getRange("A1:S6");
-	let legendRow = newSheet.getRange("A1:S1");
-	let bottom = newSheet.getRange("A5:S6");
-	let portSumm = newSheet.getRange("A5:S5");
-	let indexRow = newSheet.getRange("A6:S6");
+	const wholeSheet = newSheet.getRange("A1:S6");
+	const legendRow = newSheet.getRange("A1:S1");
+	const bottom = newSheet.getRange("A5:S6");
+	const portSumm = newSheet.getRange("A5:S5");
+	const indexRow = newSheet.getRange("A6:S6");
 
-	let legend = [
+	const legend = [
 		"Ticker",
 		"Company Name",
 		"Date Obtained",
@@ -54,7 +54,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Sector"
 	];
 
-	let portSummVal = [
+	const portSummVal = [
 		"Total",
 		newPortName,
 		creDate,
@@ -76,7 +76,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"portfolio"
 	];
 
-	let inx = [
+	const inx = [
 		".INX",
 		"=GOOGLEFINANCE(A6, \"name\")",
 		creDate,
@@ -98,7 +98,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Index"
 	];
 
-	let horAligns = [
+	const horAligns = [
 		"left",
 		"left",
 		"right",
@@ -160,16 +160,16 @@ function insertPortBase(newPortName, inCash, creDate) {
 
 function insertHistory(newPortName) {
 	ss.insertSheet(newPortName+" History");
-	let newHist = ss.getSheetByName(newPortName+" History");
+	const newHist = ss.getSheetByName(newPortName+" History");
 
-	let rowCount = newHist.getMaxRows();
-	let columnCount = newHist.getMaxColumns();
+	const rowCount = newHist.getMaxRows();
+	const columnCount = newHist.getMaxColumns();
 	newHist.deleteRows(3, rowCount-2);
 	newHist.deleteColumns(4, columnCount-3);
 
-	let wholeHist = newHist.getRange("A1:C3");
-	let topRow = newHist.getRange("A1:C1");
-	let curRow = newHist.getRange("A2:C2");
+	const wholeHist = newHist.getRange("A1:C3");
+	const topRow = newHist.getRange("A1:C1");
+	const curRow = newHist.getRange("A2:C2");
 
 	topRow.setValues([["Date (mm/dd/yyyy)", "Portfolio Value", "Portfolio Value (Fridays only)"]])
 	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", "='"+newPortName+"'!H5", ""]])
@@ -192,5 +192,5 @@ function insertHistory(newPortName) {
 
 function insertUtil(newPortName, intRate, compFreq) {
 	ss.insertSheet(newPortName+" Utility");
-	let newUtil = ss.getSheetByName(newPortName+" Utility");
+	const newUtil = ss.getSheetByName(newPortName+" Utility");
 }
