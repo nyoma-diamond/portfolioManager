@@ -25,11 +25,11 @@ Now that you have a spreadsheet to link the script to, open the Google Script Ed
 
 Now that the project is prepared you need to get the project ID so Clasp knows where to push to. In the Google Script Editor, go into the `File` menu and select `Project properties`. Once in `Project properties` find and copy the Script ID. Once you have the script ID, in your local `portfolioManager` directory create a file caled `.clasp.json` containing `{"scriptId":"<your script id>"}`.
 
-### Pushing to Google
+### History setup
+> History setup method is tbd as when to record data is still an open question
+
+## Pushing to Google
 Once you have created a project in Google Scripts and are ready to push your work to Google, you need to compile the TypeScript files into JavaScript.
 To do this, run `tsc` in a terminal.
 
 Now that the TypeScript has been compiled into JavaScript, you can push the files to Google using `clasp push`. 
-
-### History setup
-> History setup method is tbd as when to record data is still an open question
