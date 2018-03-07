@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		Portfolio Name: <br />
-		<input type="text" id="newPortName"> <br />
-		Account Creation Date: <br />
-		<input type="text" id="creDate"> <br />
-		Initial Cash: <br />
-		<input type="text" id="inCash"> <br />
-		Yearly Interest Rate on Cash: <br />
-		<input type="text" id="intRate"> <br />
-		Interest Compounding Frequency (per year): <br />
+		<p>Portfolio Name:</p>
+		<input type="text" id="newPortName"> 
+		<br /><br />
+
+		<p>Portfolio Creation Date:</p>
+		<input type="text" id="creDate"> 
+		<br /><br />
+		
+		<p>Initial Cash:</p>
+		<input type="text" id="inCash"> 
+		<br /><br />
+		
+		<p>Yearly Interest Rate on Cash:<p>
+		<input type="text" id="intRate"> 
+		<br /><br />
+
+		<p>Interest Compounding Frequency (per year):</p> 
 		<input type="text" id="compFreq">
 		<br /><br />
 
-		<script>
+		<script type="text/javascript" defer>
 			var newPortName;
 			var inCash;
 			var creDate;
@@ -28,7 +36,7 @@
 				compFreq = document.getElementById("compFreq").value;
 
 				google.script.run.newPort(newPortName, inCash, creDate, intRate, compFreq);
-				}
+			}
 
 			function clearInputs() {
 				document.getElementById("newPortName").value = "";
