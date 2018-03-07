@@ -57,7 +57,7 @@ function submitCheck(portName: string, ticker: string, dateStr: string, quantity
 	validMap[priceTitle] = (price >= 0 && priceStr != "") ? true : priceTitle;
 
 	const badIn: string[] = [];
-	for (let key in validMap) {
+	for (const key in validMap) {
 		if (validMap[key] !== true) {
 			badIn.push(key);
 		}

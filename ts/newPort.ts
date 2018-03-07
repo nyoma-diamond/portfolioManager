@@ -21,18 +21,6 @@ function newPort(newPortName: string, inCash: string, creDate: string, intRate: 
 }
 
 function insertPortBase(newPortName: string, inCash: string, creDate: string): void {
-	ss.insertSheet(newPortName);
-	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
-	const rowCount: number = newSheet.getMaxRows();
-	const columnCount: number = newSheet.getMaxColumns();
-	newSheet.deleteRows(6, rowCount-5);
-	newSheet.deleteColumns(20, columnCount-19);
-	const wholeSheet: GSheets.Range = newSheet.getRange("A1:S6");
-	const legendRow: GSheets.Range = newSheet.getRange("A1:S1");
-	const bottom: GSheets.Range = newSheet.getRange("A5:S6");
-	const portSumm: GSheets.Range = newSheet.getRange("A5:S5");
-	const indexRow: GSheets.Range = newSheet.getRange("A6:S6");
-
 	const legend: string[] = [
 		"Ticker",
 		"Company Name",
@@ -54,6 +42,18 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string): v
 		"P/E Ratio",
 		"Sector"
 	];
+
+	ss.insertSheet(newPortName);
+	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
+	const rowCount: number = newSheet.getMaxRows();
+	const columnCount: number = newSheet.getMaxColumns();
+	newSheet.deleteRows(6, rowCount-5);
+	newSheet.deleteColumns(legend.length+1, columnCount-legend.length);
+	const wholeSheet: GSheets.Range = newSheet.getRange("A1:S6");
+	const legendRow: GSheets.Range = newSheet.getRange("A1:S1");
+	const bottom: GSheets.Range = newSheet.getRange("A5:S6");
+	const portSumm: GSheets.Range = newSheet.getRange("A5:S5");
+	const indexRow: GSheets.Range = newSheet.getRange("A6:S6");
 
 	const portSummVal: string[] = [
 		"Total",
@@ -141,7 +141,7 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string): v
 
 	//CONDITIONAL FORMATTING GOES HERE
 
-	for (let i = 1; i <= 19; i++) {
+	for (let i = 1; i <= legend.length; i++) {
 		newSheet.autoResizeColumn(i);
 	}
 
