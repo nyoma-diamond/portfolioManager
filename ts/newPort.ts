@@ -1,12 +1,13 @@
-function newPortBar() {
-	var html = HtmlService.createHtmlOutputFromFile("html/newPortBar")
+/// <reference path ="./gNamespaces.ts" />
+function newPortBar(): void {
+	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newPortBar")
 			.setTitle("Portfolio Management")
 			.setWidth(300);
 	SpreadsheetApp.getUi()
 			.showSidebar(html);
 }
 
-function newPort(newPortName, inCash, creDate, intRate, compFreq) {
+function newPort(newPortName: string, inCash: string, creDate: string, intRate: string, compFreq: string): void {
 	if (!ss.getSheetByName(newPortName)) {
 		insertPortBase(newPortName, inCash, creDate);
 		insertHistory(newPortName);
@@ -14,26 +15,13 @@ function newPort(newPortName, inCash, creDate, intRate, compFreq) {
 		SpreadsheetApp.setActiveSheet(ss.getSheetByName(newPortName));
 	}
 	else {
-		SpreadsheetApp.getUi().alert(newPortName+" already exists")
+		SpreadsheetApp.getUi().alert(`${newPortName} already exists`)
 		return;
 	}
-
 }
 
-function insertPortBase(newPortName, inCash, creDate) {
-	ss.insertSheet(newPortName);
-	var newSheet = ss.getSheetByName(newPortName);
-	var rowCount = newSheet.getMaxRows();
-	var columnCount = newSheet.getMaxColumns();
-	newSheet.deleteRows(6, rowCount-5);
-	newSheet.deleteColumns(20, columnCount-19);
-	var wholeSheet = newSheet.getRange("A1:S6");
-	var legendRow = newSheet.getRange("A1:S1");
-	var bottom = newSheet.getRange("A5:S6");
-	var portSumm = newSheet.getRange("A5:S5");
-	var indexRow = newSheet.getRange("A6:S6");
-
-	var legend = [
+function insertPortBase(newPortName: string, inCash: string, creDate: string): void {
+	const legend: string[] = [
 		"Ticker",
 		"Company Name",
 		"Date Obtained",
@@ -55,7 +43,19 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Sector"
 	];
 
-	var portSummVal = [
+	ss.insertSheet(newPortName);
+	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
+	const rowCount: number = newSheet.getMaxRows();
+	const columnCount: number = newSheet.getMaxColumns();
+	newSheet.deleteRows(6, rowCount-5);
+	newSheet.deleteColumns(legend.length+1, columnCount-legend.length);
+	const wholeSheet: GSheets.Range = newSheet.getRange("A1:S6");
+	const legendRow: GSheets.Range = newSheet.getRange("A1:S1");
+	const bottom: GSheets.Range = newSheet.getRange("A5:S6");
+	const portSumm: GSheets.Range = newSheet.getRange("A5:S5");
+	const indexRow: GSheets.Range = newSheet.getRange("A6:S6");
+
+	const portSummVal: string[] = [
 		"Total",
 		newPortName,
 		creDate,
@@ -69,15 +69,15 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"=H5/H$5",
 		"day change", //UTILITY || HISTORY CALC GOES HERE
 		"=SUM(M2:M3)",
-		"=MAX('"+newPortName+" History'!B2:B)",
-		"=MIN('"+newPortName+" History'!B2:B)",
+		`=MAX('${newPortName} History'!B2:B`,
+		`=MIN('${newPortName} History'!B2:B`,
 		"sparkline", //HISTORY CALC GOES HERE
 		"#N/A",
 		"#N/A",
 		"portfolio"
 	];
 
-	var inx = [
+	const inx: string[] = [
 		".INX",
 		"=GOOGLEFINANCE(A6, \"name\")",
 		creDate,
@@ -99,7 +99,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Index"
 	];
 
-	var horAligns = [
+	const horAligns: string[] = [
 		"left",
 		"left",
 		"right",
@@ -141,39 +141,39 @@ function insertPortBase(newPortName, inCash, creDate) {
 
 	//CONDITIONAL FORMATTING GOES HERE
 
-	for (var i = 1; i <= 19; i++) {
+	for (let i = 1; i <= legend.length; i++) {
 		newSheet.autoResizeColumn(i);
 	}
 
-		for (var i = 2; i <= 6; i++) {
-		newSheet.getRange(i,1,1,19).setNumberFormats([formats]);
-		newSheet.getRange(i,1,1,19).setHorizontalAlignments([horAligns]);
+	for (let i = 2; i <= 6; i++) {
+		newSheet.getRange(i, 1, 1, 19).setNumberFormats([formats]);
+		newSheet.getRange(i, 1, 1, 19).setHorizontalAlignments([horAligns]);
 	}
 
-	for (var i = 1; i <= 4; i++) {
+	for (let i = 1; i <= 4; i++) {
 		newSheet.setRowHeight(i, 25);
 	}
 
-	for (var i = 5; i <= 6; i++) {
+	for (let i = 5; i <= 6; i++) {
 		newSheet.setRowHeight(i, 50);
 	}
 }
 
-function insertHistory(newPortName) {
-	ss.insertSheet(newPortName+" History");
-	var newHist = ss.getSheetByName(newPortName+" History");
+function insertHistory(newPortName: string): void {
+	ss.insertSheet(`${newPortName} History`);
+	const newHist: GSheets.Sheet = ss.getSheetByName(`${newPortName} History`);
 
-	var rowCount = newHist.getMaxRows();
-	var columnCount = newHist.getMaxColumns();
+	const rowCount: number = newHist.getMaxRows();
+	const columnCount: number = newHist.getMaxColumns();
 	newHist.deleteRows(3, rowCount-2);
 	newHist.deleteColumns(4, columnCount-3);
 
-	var wholeHist = newHist.getRange("A1:C3");
-	var topRow = newHist.getRange("A1:C1");
-	var curRow = newHist.getRange("A2:C2");
+	const wholeHist: GSheets.Range = newHist.getRange("A1:C3");
+	const topRow: GSheets.Range = newHist.getRange("A1:C1");
+	const curRow: GSheets.Range = newHist.getRange("A2:C2");
 
 	topRow.setValues([["Date (mm/dd/yyyy)", "Portfolio Value", "Portfolio Value (Fridays only)"]])
-	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", "='"+newPortName+"'!H5", ""]])
+	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", `='${newPortName}'~H5`, ""]])
 
 	wholeHist.setVerticalAlignment("middle");
 	topRow.setHorizontalAlignment("left");
@@ -182,17 +182,16 @@ function insertHistory(newPortName) {
 	curRow.setNumberFormats([["\"text\"", "\"$\"#,##0.00",  "\"$\"#,##0.00"]]);
 	curRow.setHorizontalAlignment("right");
 
-	for (var i = 1; i <= 3; i++) {
+	for (let i = 1; i <= 3; i++) {
 		newHist.autoResizeColumn(i);
 	}
 
-	for (var i = 1; i <= 2; i++) {
+	for (let i = 1; i <= 2; i++) {
 		newHist.setRowHeight(i, 21);
 	}
 }
 
-function insertUtil(newPortName, intRate, compFreq) {
-	ss.insertSheet(newPortName+" Utility");
-	var newUtil = ss.getSheetByName(newPortName+" Utility");
-
+function insertUtil(newPortName: string, intRate: string, compFreq: string): void {
+	ss.insertSheet(`${newPortName} Utility`);
+	const newUtil: GSheets.Sheet = ss.getSheetByName(`${newPortName} Utility`);
 }

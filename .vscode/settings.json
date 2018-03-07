@@ -1,0 +1,6 @@
+{
+	"files.exclude":
+	{
+		"gs/": true
+	}
+}

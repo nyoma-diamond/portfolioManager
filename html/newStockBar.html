@@ -21,7 +21,8 @@
 			<input type="number" id="price">
 			<br /><br />
 
-			<script>
+			<script type="text/javascript" defer>
+			var portName;
 			var ticker;
 			var date;
 			var quantity;
@@ -29,13 +30,9 @@
 
 			function submit() {
 				portName = document.getElementById("portName").value;
-
 				ticker = document.getElementById("ticker").value;
-
 				date = document.getElementById("date").value;
-
 				quantity = document.getElementById("quantity").value;
-
 				price = document.getElementById("price").value;
 
 				google.script.run.submitCheck(portName, ticker, date, quantity, price);
