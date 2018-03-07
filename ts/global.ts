@@ -1,4 +1,4 @@
-/// <reference path ="./gNameSpaces.ts" />
+/// <reference path ="./gNamespaces.ts" />
 const ss: GSheets.Spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 
 function onOpen(): void {

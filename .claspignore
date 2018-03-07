@@ -1,6 +1,6 @@
 **/node_modules/**
 **/ts/**
-gs/gNameSpaces.js
+gs/gNamespaces.js
 .clasp.json
 .claspignore
 package-lock.json

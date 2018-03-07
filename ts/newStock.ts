@@ -1,4 +1,4 @@
-/// <reference path ="./gNameSpaces.ts" />
+/// <reference path ="./gNamespaces.ts" />
 function newStock(): void {
 	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newStockBar")
 			.setTitle("Portfolio Management")

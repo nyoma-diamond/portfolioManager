@@ -1,4 +1,4 @@
-/// <reference path ="./gNameSpaces.ts" />
+/// <reference path ="./gNamespaces.ts" />
 function newPortBar(): void {
 	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newPortBar")
 			.setTitle("Portfolio Management")

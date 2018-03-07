@@ -1,4 +1,4 @@
-/// <reference path ="./gNameSpaces.ts" />
+/// <reference path ="./gNamespaces.ts" />
 function recordHistory(histSheet: GSheets.Sheet): void {
 	const values: Object[][] = histSheet.getRange("A2:B2").getValues();
 	const date: Date = new Date();
