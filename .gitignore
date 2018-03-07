@@ -1,4 +1,5 @@
 gs/
 node_modules/
+gs/
 .clasp.json
 yarn-error.log
