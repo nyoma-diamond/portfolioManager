@@ -12,13 +12,13 @@ It is highly recommended to use `Yarn` instead of `npm` while working on this pr
 ## Instructions
 ### Initial setup
 Before working on this program its imperative that `Clasp` is installed. 
-To do this you must first install `Node.js`, as it is neccessary to install Clasp. You can download `Node.js` [here](https://nodejs.org/en/download/).
+To do this you must first install `Node.js`, as it is neccessary to install `Clasp`. You can download `Node.js` [here](https://nodejs.org/en/download/).
 
 To get `Clasp`, open a terminal and run `yarn global add @google/clasp` or `npm i @google/clasp -g` if not using `Yarn`.
 
 After installing `Clasp` you need to log in and give `Clasp` permissions to edit script files on your Google account. To do this run `clasp login` and go through the login screen.
 
-Once logged in you need to enable the `Google Apps Script API` setting in [Google Scripts](https://scripts.google.com). To do this, go to your [Google Apps Script User Settings](https://script.google.com/home/usersettings), click `Google Apps Script API`, and set `Google Apps Script` to `On` if it isn't already.
+Once logged in you need to enable the `Google Apps Script API` setting in [Google Scripts](https://scripts.google.com). To do this, go to your [Google Apps Script User Settings](https://script.google.com/home/usersettings) and click `Google Apps Script API` and set it to `On` if it isn't already.
 
 ### Creating and setting up the project
 Unfortunately there is no way to create a project in Google Scripts and link a spreadsheet to it after the fact, so we must first create a spreadsheet in Google Sheets. To do this, go to [Google Drive](https://drive.google.com) and navigate to where you want to keep your spreadsheet, then click `NEW`, followed by `Google Sheets` in the dropdown menu. This will create a blank spreadsheet for you to work with.
