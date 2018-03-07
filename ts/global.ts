@@ -11,16 +11,16 @@ function onOpen(): void {
 }
 
 function testAlert(input: any): void {
-	SpreadsheetApp.getUi().alert("input is "+input);
+	SpreadsheetApp.getUi().alert(`Input is ${input}`);
 }
 
 function badInput(badIn: string[]) {
 	const ui: GBase.Ui = SpreadsheetApp.getUi();
 	if (badIn.length == 1) {
-		ui.alert("Error", "The following input was invalid:\n"+badIn.toString(), ui.ButtonSet.OK);
+		ui.alert("Error", `The following input was invalid:\n${badIn.toString()}`, ui.ButtonSet.OK);
 	}
 	else {
-		ui.alert("Error", "The following inputs were invalid:\n"+badIn.toString(), ui.ButtonSet.OK);
+		ui.alert("Error", `The following inputs were invalid:\n${badIn.toString()}`, ui.ButtonSet.OK);
 	}
 }
 

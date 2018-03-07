@@ -7,7 +7,7 @@ function newPortBar(): void {
 			.showSidebar(html);
 }
 
-function newPort(newPortName, inCash, creDate, intRate, compFreq): void {
+function newPort(newPortName: string, inCash: string, creDate: string, intRate: string, compFreq: string): void {
 	if (!ss.getSheetByName(newPortName)) {
 		insertPortBase(newPortName, inCash, creDate);
 		insertHistory(newPortName);
@@ -15,12 +15,12 @@ function newPort(newPortName, inCash, creDate, intRate, compFreq): void {
 		SpreadsheetApp.setActiveSheet(ss.getSheetByName(newPortName));
 	}
 	else {
-		SpreadsheetApp.getUi().alert(newPortName+" already exists")
+		SpreadsheetApp.getUi().alert(`${newPortName} already exists`)
 		return;
 	}
 }
 
-function insertPortBase(newPortName, inCash, creDate): void {
+function insertPortBase(newPortName: string, inCash: string, creDate: string): void {
 	ss.insertSheet(newPortName);
 	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
 	const rowCount: number = newSheet.getMaxRows();
@@ -69,8 +69,8 @@ function insertPortBase(newPortName, inCash, creDate): void {
 		"=H5/H$5",
 		"day change", //UTILITY || HISTORY CALC GOES HERE
 		"=SUM(M2:M3)",
-		"=MAX('"+newPortName+" History'!B2:B)",
-		"=MIN('"+newPortName+" History'!B2:B)",
+		`=MAX('${newPortName} History'!B2:B`,
+		`=MIN('${newPortName} History'!B2:B`,
 		"sparkline", //HISTORY CALC GOES HERE
 		"#N/A",
 		"#N/A",
@@ -159,9 +159,9 @@ function insertPortBase(newPortName, inCash, creDate): void {
 	}
 }
 
-function insertHistory(newPortName): void {
-	ss.insertSheet(newPortName+" History");
-	const newHist: GSheets.Sheet = ss.getSheetByName(newPortName+" History");
+function insertHistory(newPortName: string): void {
+	ss.insertSheet(`${newPortName} History`);
+	const newHist: GSheets.Sheet = ss.getSheetByName(`${newPortName} History`);
 
 	const rowCount: number = newHist.getMaxRows();
 	const columnCount: number = newHist.getMaxColumns();
@@ -173,7 +173,7 @@ function insertHistory(newPortName): void {
 	const curRow: GSheets.Range = newHist.getRange("A2:C2");
 
 	topRow.setValues([["Date (mm/dd/yyyy)", "Portfolio Value", "Portfolio Value (Fridays only)"]])
-	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", "='"+newPortName+"'!H5", ""]])
+	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", `='${newPortName}'~H5`, ""]])
 
 	wholeHist.setVerticalAlignment("middle");
 	topRow.setHorizontalAlignment("left");
@@ -191,7 +191,7 @@ function insertHistory(newPortName): void {
 	}
 }
 
-function insertUtil(newPortName, intRate, compFreq): void {
-	ss.insertSheet(newPortName+" Utility");
-	const newUtil: GSheets.Sheet = ss.getSheetByName(newPortName+" Utility");
+function insertUtil(newPortName: string, intRate: string, compFreq: string): void {
+	ss.insertSheet(`${newPortName} Utility`);
+	const newUtil: GSheets.Sheet = ss.getSheetByName(`${newPortName} Utility`);
 }
