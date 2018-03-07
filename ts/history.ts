@@ -1,14 +1,15 @@
-function recordHistory(histSheet) {
-	const values = histSheet.getRange("A2:B2").getValues();
-	const date = new Date();
-	const month = date.getMonth()+1;
-	const day = date.getDate();
-	const year = date.getFullYear();
-	const isFriday = date.getDay() == 5;
+/// <reference path ="./gNameSpaces.ts" />
+function recordHistory(histSheet: GSheets.Sheet): void {
+	const values: Object[][] = histSheet.getRange("A2:B2").getValues();
+	const date: Date = new Date();
+	const month: number = date.getMonth()+1;
+	const day: number = date.getDate();
+	const year: number = date.getFullYear();
+	const isFriday: boolean = date.getDay() == 5;
 	values[0][0] = month + "/" + day + "/" + year;
 
 	histSheet.insertRowBefore(3);
-	const newRow = histSheet.getRange("A3:B3");
+	const newRow: GSheets.Range = histSheet.getRange("A3:B3");
 	newRow.setValues(values);
 	newRow.setNumberFormats([["mm/dd/yyyy", "\"$\"#,##0.00"]]);
 
@@ -18,16 +19,16 @@ function recordHistory(histSheet) {
 		histSheet.getRange("B3").copyTo(histSheet.getRange("C3"));
 	}*/
 
-	const rowCount = histSheet.getMaxRows();
+	const rowCount: number = histSheet.getMaxRows();
 	if (rowCount > 366) {
 		histSheet.deleteRows(367,rowCount-366);
 	}
 }
 
-function recordAllHistory() {
-	const allSheets = ss.getSheets();
+function recordAllHistory(): void {
+	const allSheets: GSheets.Sheet[] = ss.getSheets();
 
-	const allHistSheets = allSheets.filter(
+	const allHistSheets: GSheets.Sheet[] = allSheets.filter(
 		function(entry) {
 			return entry.getName().indexOf(" History") > -1
 		}

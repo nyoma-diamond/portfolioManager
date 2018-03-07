@@ -1,12 +1,13 @@
-function newPortBar() {
-	const html = HtmlService.createHtmlOutputFromFile("html/newPortBar")
+/// <reference path ="./gNameSpaces.ts" />
+function newPortBar(): void {
+	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newPortBar")
 			.setTitle("Portfolio Management")
 			.setWidth(300);
 	SpreadsheetApp.getUi()
 			.showSidebar(html);
 }
 
-function newPort(newPortName, inCash, creDate, intRate, compFreq) {
+function newPort(newPortName, inCash, creDate, intRate, compFreq): void {
 	if (!ss.getSheetByName(newPortName)) {
 		insertPortBase(newPortName, inCash, creDate);
 		insertHistory(newPortName);
@@ -19,20 +20,20 @@ function newPort(newPortName, inCash, creDate, intRate, compFreq) {
 	}
 }
 
-function insertPortBase(newPortName, inCash, creDate) {
+function insertPortBase(newPortName, inCash, creDate): void {
 	ss.insertSheet(newPortName);
-	const newSheet = ss.getSheetByName(newPortName);
-	const rowCount = newSheet.getMaxRows();
-	const columnCount = newSheet.getMaxColumns();
+	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
+	const rowCount: number = newSheet.getMaxRows();
+	const columnCount: number = newSheet.getMaxColumns();
 	newSheet.deleteRows(6, rowCount-5);
 	newSheet.deleteColumns(20, columnCount-19);
-	const wholeSheet = newSheet.getRange("A1:S6");
-	const legendRow = newSheet.getRange("A1:S1");
-	const bottom = newSheet.getRange("A5:S6");
-	const portSumm = newSheet.getRange("A5:S5");
-	const indexRow = newSheet.getRange("A6:S6");
+	const wholeSheet: GSheets.Range = newSheet.getRange("A1:S6");
+	const legendRow: GSheets.Range = newSheet.getRange("A1:S1");
+	const bottom: GSheets.Range = newSheet.getRange("A5:S6");
+	const portSumm: GSheets.Range = newSheet.getRange("A5:S5");
+	const indexRow: GSheets.Range = newSheet.getRange("A6:S6");
 
-	const legend = [
+	const legend: string[] = [
 		"Ticker",
 		"Company Name",
 		"Date Obtained",
@@ -54,7 +55,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Sector"
 	];
 
-	const portSummVal = [
+	const portSummVal: string[] = [
 		"Total",
 		newPortName,
 		creDate,
@@ -76,7 +77,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"portfolio"
 	];
 
-	const inx = [
+	const inx: string[] = [
 		".INX",
 		"=GOOGLEFINANCE(A6, \"name\")",
 		creDate,
@@ -98,7 +99,7 @@ function insertPortBase(newPortName, inCash, creDate) {
 		"Index"
 	];
 
-	const horAligns = [
+	const horAligns: string[] = [
 		"left",
 		"left",
 		"right",
@@ -145,8 +146,8 @@ function insertPortBase(newPortName, inCash, creDate) {
 	}
 
 	for (let i = 2; i <= 6; i++) {
-		newSheet.getRange(i,1,1,19).setNumberFormats([formats]);
-		newSheet.getRange(i,1,1,19).setHorizontalAlignments([horAligns]);
+		newSheet.getRange(i, 1, 1, 19).setNumberFormats([formats]);
+		newSheet.getRange(i, 1, 1, 19).setHorizontalAlignments([horAligns]);
 	}
 
 	for (let i = 1; i <= 4; i++) {
@@ -158,18 +159,18 @@ function insertPortBase(newPortName, inCash, creDate) {
 	}
 }
 
-function insertHistory(newPortName) {
+function insertHistory(newPortName): void {
 	ss.insertSheet(newPortName+" History");
-	const newHist = ss.getSheetByName(newPortName+" History");
+	const newHist: GSheets.Sheet = ss.getSheetByName(newPortName+" History");
 
-	const rowCount = newHist.getMaxRows();
-	const columnCount = newHist.getMaxColumns();
+	const rowCount: number = newHist.getMaxRows();
+	const columnCount: number = newHist.getMaxColumns();
 	newHist.deleteRows(3, rowCount-2);
 	newHist.deleteColumns(4, columnCount-3);
 
-	const wholeHist = newHist.getRange("A1:C3");
-	const topRow = newHist.getRange("A1:C1");
-	const curRow = newHist.getRange("A2:C2");
+	const wholeHist: GSheets.Range = newHist.getRange("A1:C3");
+	const topRow: GSheets.Range = newHist.getRange("A1:C1");
+	const curRow: GSheets.Range = newHist.getRange("A2:C2");
 
 	topRow.setValues([["Date (mm/dd/yyyy)", "Portfolio Value", "Portfolio Value (Fridays only)"]])
 	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", "='"+newPortName+"'!H5", ""]])
@@ -190,7 +191,7 @@ function insertHistory(newPortName) {
 	}
 }
 
-function insertUtil(newPortName, intRate, compFreq) {
+function insertUtil(newPortName, intRate, compFreq): void {
 	ss.insertSheet(newPortName+" Utility");
-	const newUtil = ss.getSheetByName(newPortName+" Utility");
+	const newUtil: GSheets.Sheet = ss.getSheetByName(newPortName+" Utility");
 }

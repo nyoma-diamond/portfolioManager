@@ -1,8 +1,9 @@
 **/node_modules/**
+**/ts/**
+gs/gNameSpaces.js
 .clasp.json
 .claspignore
 package-lock.json
 package.json
 yarn-error.log
 yarn.lock
-**/ts/**
