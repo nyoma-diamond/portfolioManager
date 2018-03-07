@@ -12,7 +12,7 @@ It is highly recommended to use `Yarn` instead of `npm` while working on this pr
 ## Instructions
 ### Initial setup
 Before working on this program its imperative that `Clasp` is installed. 
-To do this you must first install `Node.js`, as it is neccessary to install Clasp. You can download `Node.js` [here](https://nodejs.org/en/download/).
+To do this you must first install `Node.js`, as it is neccessary to install `Clasp`. You can download `Node.js` [here](https://nodejs.org/en/download/).
 
 To get `Clasp`, open a terminal and run `yarn global add @google/clasp` or `npm i @google/clasp -g` if not using `Yarn`.
 
