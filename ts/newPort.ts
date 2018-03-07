@@ -43,12 +43,15 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string): v
 		"Sector"
 	];
 
+	const finalRowCount: number = 6;
+	const finalColumnCount: number = legend.length;
+
 	ss.insertSheet(newPortName);
 	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
 	const rowCount: number = newSheet.getMaxRows();
 	const columnCount: number = newSheet.getMaxColumns();
-	newSheet.deleteRows(6, rowCount-5);
-	newSheet.deleteColumns(legend.length+1, columnCount-legend.length);
+	newSheet.deleteRows(finalRowCount, 1+rowCount-finalRowCount);
+	newSheet.deleteColumns(finalColumnCount+1, columnCount-finalColumnCount);
 	const wholeSheet: GSheets.Range = newSheet.getRange("A1:S6");
 	const legendRow: GSheets.Range = newSheet.getRange("A1:S1");
 	const bottom: GSheets.Range = newSheet.getRange("A5:S6");
@@ -141,21 +144,21 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string): v
 
 	//CONDITIONAL FORMATTING GOES HERE
 
-	for (let i = 1; i <= legend.length; i++) {
-		newSheet.autoResizeColumn(i);
+	for (let column = 1; column <= finalColumnCount; column++) {
+		newSheet.autoResizeColumn(column);
 	}
 
-	for (let i = 2; i <= 6; i++) {
-		newSheet.getRange(i, 1, 1, 19).setNumberFormats([formats]);
-		newSheet.getRange(i, 1, 1, 19).setHorizontalAlignments([horAligns]);
+	for (let row = 2; row <= finalRowCount; row++) {
+		newSheet.getRange(row, 1, 1, finalColumnCount).setNumberFormats([formats]);
+		newSheet.getRange(row, 1, 1, finalColumnCount).setHorizontalAlignments([horAligns]);
 	}
 
-	for (let i = 1; i <= 4; i++) {
-		newSheet.setRowHeight(i, 25);
+	for (let row = 1; row <= finalRowCount-2; row++) {
+		newSheet.setRowHeight(row, 25);
 	}
 
-	for (let i = 5; i <= 6; i++) {
-		newSheet.setRowHeight(i, 50);
+	for (let row = finalRowCount-1; row <= finalRowCount; row++) {
+		newSheet.setRowHeight(row, 50);
 	}
 }
 
