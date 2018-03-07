@@ -5,7 +5,9 @@ This program's express purpose is for the streamlining of stock portfolio tracki
 
 This program is designed to be pushed to Google using Clasp. Click [here](https://github.com/google/clasp) to learn more about Clasp.
 
-This program is written in TypeScript, meaning some additional work may be necessary in order to push to Google. 
+This program is written in TypeScript, meaning some additional work will be necessary in order to push to Google. 
+
+It is highly recommended to use Yarn instead of npm while working on this program. You can install Yarn [here](https://yarnpkg.com/lang/en/docs/install/).
 
 ## Instructions
 ### Initial setup
@@ -29,7 +31,8 @@ Now that the project is prepared you need to get the project ID so Clasp knows w
 > History setup method is tbd as when to record data is still an open question
 
 ## Pushing to Google
-Once you have created a project in Google Scripts and are ready to push your work to Google, you need to compile the TypeScript files into JavaScript.
-To do this, run `tsc` in a terminal.
+Once you have created a project in Google Scripts and are ready to push your work to Google you can do so using `yarn tscpush` or `npm run-script tscpush`. 
+
+Alternatively, if you don't wish to do it using Yarn or npm you will need to compile the TypeScript files into JavaScript before you can push to Google. To do this, run `tsc` in a terminal.
 
 Now that the TypeScript has been compiled into JavaScript, you can push the files to Google using `clasp push`. 

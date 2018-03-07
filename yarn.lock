@@ -5,3 +5,7 @@
 "@types/google-apps-script@^0.0.21":
   version "0.0.21"
   resolved "https://registry.yarnpkg.com/@types/google-apps-script/-/google-apps-script-0.0.21.tgz#5e08c42ffbb7fceee1031b033142776c6ede719f"
+
+typescript@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"

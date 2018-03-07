@@ -1,5 +1,30 @@
 {
+	"name": "portfolio-manager",
+	"version": "0.0.0",
+	"description": "Google Sheets portfolio manager",
+	"homepage": "https://github.com/napostrophe/portfolioManager",
+	"private": true,
+	"author": {
+		"name": "N'yoma Diamond",
+		"email": "nyoma@windowoffire.com",
+		"url": "https://github.com/napostrophe"
+	},
 	"dependencies": {
-		"@types/google-apps-script": "^0.0.21"
-	}
+		"@types/google-apps-script": "^0.0.21",
+		"typescript": "^2.7.2"
+	},
+	"scripts": {
+		"install": "tsc",
+		"tscpush": "tsc && clasp push"
+	},
+	"keywords": [
+		"google sheets",
+		"google apps script",
+		"portfolio",
+		"stocks",
+		"portfolio manager",
+		"market",
+		"tracking",
+		"management"
+	]
 }
