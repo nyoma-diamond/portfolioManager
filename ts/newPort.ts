@@ -184,7 +184,7 @@ function insertHistory(newPortName: string, finalPortRowCount: number): void {
 	const curRow: GSheets.Range = newHist.getRange("A2:C2");
 
 	topRow.setValues([["Date (mm/dd/yyyy)", "Portfolio Value", "Portfolio Value (Fridays only)"]])
-	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", `='${newPortName}'!H${finalPortRowCount}`, ""]])
+	curRow.setValues([["=\"Current (\"&TEXT(NOW(), \"MM/dd/yyyy hh:mm\")&\")\"", `='${newPortName}'!H${finalPortRowCount-1}`, ""]])
 
 	wholeHist.setVerticalAlignment("middle");
 	topRow.setHorizontalAlignment("left");
