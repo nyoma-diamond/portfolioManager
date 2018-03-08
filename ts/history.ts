@@ -34,7 +34,7 @@ function recordAllHistory(): void {
 		}
 	);
 
-	for (const histSheet of allHistSheets) {
+	for (let histSheet of allHistSheets) {
 		recordHistory(histSheet);
 	}
 }

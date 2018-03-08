@@ -44,8 +44,8 @@ function deletePort(): void {
 						toDelete.push(ss.getSheetByName(key));
 					}
 				}
-				for (let i = 0; i <= toDelete.length-1; i++) {
-					ss.deleteSheet(toDelete[i]);
+				for (let victim of toDelete) {
+					ss.deleteSheet(victim);
 				}
 			}
 		}
