@@ -5,13 +5,10 @@ function onOpen(): void {
 	const portManMen: GBase.Menu = SpreadsheetApp.getUi().createMenu("Portfolio Management");
 	portManMen.addItem("New Stock", "newStock").addToUi();
 	portManMen.addItem("New Portfolio", "newPortBar").addToUi();
+	portManMen.addItem("Delete Portfolio", "deletePort").addToUi();
 	portManMen.addItem("Base Test", "insertPortBase").addToUi();
 	portManMen.addItem("History Test", "recordAllHistory").addToUi();
 	portManMen.addItem("History Base Test", "insertHistory").addToUi();
-}
-
-function testAlert(input: any): void {
-	SpreadsheetApp.getUi().alert(`Input is ${input}`);
 }
 
 function badInput(badIn: string[]) {
@@ -22,6 +19,45 @@ function badInput(badIn: string[]) {
 	else {
 		ui.alert("Error", `The following inputs were invalid:\n${badIn.toString()}`, ui.ButtonSet.OK);
 	}
+}
+
+function deletePort(): void {
+	const ui: GBase.Ui = SpreadsheetApp.getUi();
+	let response: GBase.PromptResponse = ui.prompt("Delete Portfolio", "Enter which portfolio you wish to delete", ui.ButtonSet.OK_CANCEL);
+	let portName: string = response.getResponseText();
+	let histName: string = `${portName} History`;
+	let utilName: string = `${portName} Utility`;
+
+	if (response.getSelectedButton() == ui.Button.OK) {
+		if (checkSheetExist(portName) || checkSheetExist(histName) || checkSheetExist(utilName)) {
+			let confResponse: GBase.Button = ui.alert("WARNING", "You are about to permanently delete a portfolio, this cannot be undone. Are you sure?", ui.ButtonSet.OK_CANCEL);
+			if (confResponse == ui.Button.OK) {
+				const existsMap: object = { };
+
+				existsMap[`${portName}`] = checkSheetExist(portName);
+				existsMap[`${portName} History`] = checkSheetExist(histName);
+				existsMap[`${portName} Utility`] = checkSheetExist(utilName);
+
+				const toDelete: GSheets.Sheet[] = [];
+				for (let key in existsMap) {
+					if (existsMap[key]) {
+						toDelete.push(ss.getSheetByName(key));
+					}
+				}
+				for (let i = 0; i <= toDelete.length-1; i++) {
+					ss.deleteSheet(toDelete[i]);
+				}
+			}
+		}
+		else {
+			ui.alert("Error", `${portName} doesn't exist`, ui.ButtonSet.OK_CANCEL)
+			//if OK send back to start (figure out how to do without RAM leak)
+		}
+	}
+}
+
+function testAlert(input: any): void {
+	SpreadsheetApp.getUi().alert(`Input is ${input}`);
 }
 
 function checkSheetExist(nameIn: string): boolean {
