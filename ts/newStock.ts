@@ -11,12 +11,14 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 	const sheet: GSheets.Sheet = ss.getSheetByName(portName);
 	SpreadsheetApp.setActiveSheet(sheet);
 
+	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2,\"price\",DATE(RIGHT(C2,4),LEFT(C2,2),MID(C2,4,2))),2,2)";
+
 	const newData: string[] = [
 		ticker,
 		"=GOOGLEFINANCE($A2, \"name\")",
 		date,
 		quantity,
-		price,
+		priceOut,
 		"=D2*E2",
 		"=GOOGLEFINANCE(A2, \"price\")",
 		"=G2*D2",
@@ -32,6 +34,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		"=GOOGLEFINANCE(A2, \"pe\")",
 		"Sector" //SECTOR LOOKUP GOES HERE
 	];
+
 	sheet.insertRowBefore(2);
 	sheet.getRange("A2:S2").setValues([newData]);
 	sheet.getRange(2,1,1,19).setNumberFormats([formats]);
