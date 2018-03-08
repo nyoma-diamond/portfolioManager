@@ -11,11 +11,16 @@ function newPort(newPortName: string, inCash: string, creDate: string, intRate: 
 	const finalPortRowCount: number = 6;
 
 	if (!ss.getSheetByName(newPortName)) {
-		
+		const portSumm52: string[] = [
+			`=MAX('${newPortName} History'!B2:B)`,
+			`=MIN('${newPortName} History'!B2:B)`,
+			"sparkline" //HISTORY CALC GOES HERE
+		];
+
 		insertPortBase(newPortName, inCash, creDate, finalPortRowCount);
 		insertHistory(newPortName, finalPortRowCount);
 		insertUtil(newPortName, intRate, compFreq);
-		SpreadsheetApp.flush();
+		ss.getSheetByName(newPortName).getRange(`N${finalPortRowCount-1}:P${finalPortRowCount-1}`).setValues([portSumm52]); //this is to refresh the 52week calculations
 		SpreadsheetApp.setActiveSheet(ss.getSheetByName(newPortName));
 	}
 	else {
