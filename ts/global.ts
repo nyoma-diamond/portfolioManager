@@ -29,30 +29,39 @@ function deletePort(): void {
 	let utilName: string = `${portName} Utility`;
 
 	if (response.getSelectedButton() == ui.Button.OK) {
-		if (checkSheetExist(portName) || checkSheetExist(histName) || checkSheetExist(utilName)) {
-			let confResponse: GBase.Button = ui.alert("WARNING", "You are about to permanently delete a portfolio, this cannot be undone. Are you sure?", ui.ButtonSet.OK_CANCEL);
-			if (confResponse == ui.Button.OK) {
-				const existsMap: object = { };
+		deletePortConfirm(portName, histName, utilName);
+	}
+	else return;
+}
 
-				existsMap[`${portName}`] = checkSheetExist(portName);
-				existsMap[`${portName} History`] = checkSheetExist(histName);
-				existsMap[`${portName} Utility`] = checkSheetExist(utilName);
+function deletePortConfirm(portName: string, histName: string, utilName: string) {
+	const ui: GBase.Ui = SpreadsheetApp.getUi();
+	if (checkSheetExist(portName) || checkSheetExist(histName) || checkSheetExist(utilName)) {		
+		let confResponse: GBase.Button = ui.alert("WARNING", "You are about to permanently delete a portfolio, this cannot be undone. Are you sure?", ui.ButtonSet.OK_CANCEL);
+		if (confResponse == ui.Button.OK) {
+			const existsMap: object = { };
 
-				const toDelete: GSheets.Sheet[] = [];
-				for (let key in existsMap) {
-					if (existsMap[key]) {
-						toDelete.push(ss.getSheetByName(key));
-					}
-				}
-				for (let victim of toDelete) {
-					ss.deleteSheet(victim);
+			existsMap[`${portName}`] = checkSheetExist(portName);
+			existsMap[`${portName} History`] = checkSheetExist(histName);
+			existsMap[`${portName} Utility`] = checkSheetExist(utilName);
+
+			const toDelete: GSheets.Sheet[] = [];
+			for (let key in existsMap) {
+				if (existsMap[key]) {
+					toDelete.push(ss.getSheetByName(key));
 				}
 			}
+			for (let victim of toDelete) {
+				ss.deleteSheet(victim);
+			}
 		}
-		else {
-			ui.alert("Error", `${portName} doesn't exist`, ui.ButtonSet.OK_CANCEL)
-			//if OK send back to start (figure out how to do without RAM leak)
+	}
+	else {
+		const errorResponse: GBase.Button = ui.alert("Error", `${portName} doesn't exist`, ui.ButtonSet.OK_CANCEL)
+		if (errorResponse == ui.Button.OK) {
+			deletePort();
 		}
+		else return;
 	}
 }
 
