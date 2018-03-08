@@ -50,7 +50,7 @@ function submitCheck(portName: string, ticker: string, dateStr: string, quantity
 	validInputMap[" Ticker"] = (ticker != "");
 	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "");
 	validInputMap[" Quantity"] = (quantity > 0 && quantityStr != "");
-	validInputMap[" Quantity"] = (price >= 0 && priceStr != "");
+	validInputMap[" Price"] = (price >= 0 && priceStr != "");
 
 	const badIn: string[] = [];
 	for (let key in validInputMap) {
