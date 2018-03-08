@@ -44,24 +44,17 @@ function submitCheck(portName: string, ticker: string, dateStr: string, quantity
 	const date: number = Date.parse(dateStr);
 	const quantity: number = Number(quantityStr);
 	const price: number = Number(priceStr);
+	const validInputMap: object = { };
 
-	const portTitle: string = " Portfolio Name";
-	const tickerTitle: string = " Ticker";
-	const dateTitle: string = " Date Obtained";
-	const quantityTitle: string = " Quantity";
-	const priceTitle: string = " Price per Share";
-
-	const validMap: object = { };
-
-	validMap[portTitle] = checkSheetExist(portName) ? true : portTitle;
-	validMap[tickerTitle] = (ticker != "") ? true : tickerTitle;
-	validMap[dateTitle] = (!isNaN(date) && dateStr != "") ? true : dateTitle;
-	validMap[quantityTitle] = (quantity > 0 && quantityStr != "") ? true : quantityTitle;
-	validMap[priceTitle] = (price >= 0 && priceStr != "") ? true : priceTitle;
+	validInputMap[" Portfolio Name"] = checkSheetExist(portName);
+	validInputMap[" Ticker"] = (ticker != "");
+	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "");
+	validInputMap[" Quantity"] = (quantity > 0 && quantityStr != "");
+	validInputMap[" Quantity"] = (price >= 0 && priceStr != "");
 
 	const badIn: string[] = [];
-	for (const key in validMap) {
-		if (validMap[key] !== true) {
+	for (let key in validInputMap) {
+		if (!validInputMap[key]) {
 			badIn.push(key);
 		}
 	}
