@@ -30,36 +30,13 @@ function newPort(newPortName: string, initCash: string, creDate: string, intRate
 }
 
 function insertPortBase(newPortName: string, initCash: string, creDate: string, finalRowCount: number): void {
-	const legend: string[] = [
-		"Ticker",
-		"Company Name",
-		"Date Obtained",
-		"Quantity",
-		"Price Paid (per share)",
-		"Total Paid",
-		"Current Share Price",
-		"Market Value",
-		"Lifetime Return",
-		"P&L",
-		"Percent of Portfolio",
-		"Day Change",
-		"Day P&L",
-		"52 Week High",
-		"52 Week Low",
-		"52 Week Sparkline",
-		"Earnings Per Share",
-		"P/E Ratio",
-		"Sector"
-	];
-
-	const finalColumnCount: number = legend.length;
 
 	ss.insertSheet(newPortName);
 	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
 	const rowCount: number = newSheet.getMaxRows();
 	const columnCount: number = newSheet.getMaxColumns();
 	newSheet.deleteRows(finalRowCount, 1+rowCount-finalRowCount);
-	newSheet.deleteColumns(finalColumnCount+1, columnCount-finalColumnCount);
+	newSheet.deleteColumns(finalNewPortColumnCount+1, columnCount-finalNewPortColumnCount);
 	const wholeSheet: GSheets.Range = newSheet.getRange(`A1:S${finalRowCount}`);
 	const legendRow: GSheets.Range = newSheet.getRange("A1:S1");
 	const bottom: GSheets.Range = newSheet.getRange(`A${finalRowCount-1}:S${finalRowCount}`);
@@ -176,11 +153,11 @@ function insertPortBase(newPortName: string, initCash: string, creDate: string, 
 	//CONDITIONAL FORMATTING GOES HERE
 
 	for (let row = 2; row <= finalRowCount; row++) {
-		newSheet.getRange(row, 1, 1, finalColumnCount).setNumberFormats([formats]);
-		newSheet.getRange(row, 1, 1, finalColumnCount).setHorizontalAlignments([horAligns]);
+		newSheet.getRange(row, 1, 1, finalNewPortColumnCount).setNumberFormats([formats]);
+		newSheet.getRange(row, 1, 1, finalNewPortColumnCount).setHorizontalAlignments([horAligns]);
 	}
 
-	for (let column = 1; column <= finalColumnCount; column++) {
+	for (let column = 1; column <= finalNewPortColumnCount; column++) {
 		newSheet.autoResizeColumn(column);
 	}
 
@@ -216,12 +193,12 @@ function insertHistory(newPortName: string, finalPortRowCount: number): void {
 	curRow.setNumberFormats([["\"text\"", "\"$\"#,##0.00",  "\"$\"#,##0.00"]]);
 	curRow.setHorizontalAlignment("right");
 
-	for (let i = 1; i <= 3; i++) {
-		newHist.autoResizeColumn(i);
+	for (let column = 1; column <= 3; column++) {
+		newHist.autoResizeColumn(column);
 	}
 
-	for (let i = 1; i <= 2; i++) {
-		newHist.setRowHeight(i, 21);
+	for (let row = 1; row <= 2; row++) {
+		newHist.setRowHeight(row, 21);
 	}
 }
 
