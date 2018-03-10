@@ -6,9 +6,6 @@ function onOpen(): void {
 	portManMen.addItem("New Stock", "newStock").addToUi();
 	portManMen.addItem("New Portfolio", "newPortBar").addToUi();
 	portManMen.addItem("Delete Portfolio", "deletePort").addToUi();
-	portManMen.addItem("Base Test", "insertPortBase").addToUi();
-	portManMen.addItem("History Test", "recordAllHistory").addToUi();
-	portManMen.addItem("History Base Test", "insertHistory").addToUi();
 }
 
 function badInput(badIn: string[]) {
@@ -37,7 +34,7 @@ function deletePort(): void {
 function deletePortConfirm(portName: string, histName: string, utilName: string) {
 	const ui: GBase.Ui = SpreadsheetApp.getUi();
 	if (checkSheetExist(portName) || checkSheetExist(histName) || checkSheetExist(utilName)) {		
-		let confResponse: GBase.Button = ui.alert("WARNING", "You are about to permanently delete a portfolio, this cannot be undone. Are you sure?", ui.ButtonSet.OK_CANCEL);
+		let confResponse: GBase.Button = ui.alert("WARNING", "You are about to permanently delete a portfolio. Are you sure?", ui.ButtonSet.OK_CANCEL);
 		if (confResponse == ui.Button.OK) {
 			const existsMap: object = { };
 
@@ -99,3 +96,27 @@ const formats: string[] = [
 	"#,##0.00",
 	"\"text\""
 ];
+
+const legend: string[] = [
+	"Ticker",
+	"Company Name",
+	"Date Obtained",
+	"Quantity",
+	"Price Paid (per share)",
+	"Total Paid",
+	"Current Share Price",
+	"Market Value",
+	"Lifetime Return",
+	"P&L",
+	"Percent of Portfolio",
+	"Day Change",
+	"Day P&L",
+	"52 Week High",
+	"52 Week Low",
+	"52 Week Sparkline",
+	"Earnings Per Share",
+	"P/E Ratio",
+	"Sector"
+];
+
+const finalNewPortColumnCount: number = legend.length;

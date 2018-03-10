@@ -7,8 +7,8 @@ function newPortBar(): void {
 			.showSidebar(html);
 }
 
-function newPort(newPortName: string, inCash: string, creDate: string, intRate: string, compFreq: string): void {
-	const finalPortRowCount: number = 6;
+function newPort(newPortName: string, initCash: string, creDate: string, intRate: string, compFreq: string): void {
+	const finalPortRowCount: number = 5;
 
 	if (!ss.getSheetByName(newPortName)) {
 		const portSumm52: string[] = [
@@ -17,7 +17,7 @@ function newPort(newPortName: string, inCash: string, creDate: string, intRate: 
 			"sparkline" //HISTORY CALC GOES HERE
 		];
 
-		insertPortBase(newPortName, inCash, creDate, finalPortRowCount);
+		insertPortBase(newPortName, initCash, creDate, finalPortRowCount);
 		insertHistory(newPortName, finalPortRowCount);
 		insertUtil(newPortName, intRate, compFreq);
 		ss.getSheetByName(newPortName).getRange(`N${finalPortRowCount-1}:P${finalPortRowCount-1}`).setValues([portSumm52]); //this is to refresh the 52week calculations
@@ -29,7 +29,7 @@ function newPort(newPortName: string, inCash: string, creDate: string, intRate: 
 	}
 }
 
-function insertPortBase(newPortName: string, inCash: string, creDate: string, finalRowCount: number): void {
+function insertPortBase(newPortName: string, initCash: string, creDate: string, finalRowCount: number): void {
 	const legend: string[] = [
 		"Ticker",
 		"Company Name",
@@ -72,7 +72,7 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string, fi
 		creDate,
 		"#N/A",
 		"#N/A",
-		inCash,
+		initCash,
 		"#N/A",
 		"=SUM(H1:H2)",
 		`=H${finalRowCount-1}/F${finalRowCount-1}-1`,
@@ -110,6 +110,28 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string, fi
 		"Index"
 	];
 
+	const cashRow: string[] = [
+		"Cash",
+		`${newPortName} Cash`,
+		creDate,
+		"#N/A",
+		"#N/A",
+		initCash,
+		"#N/A",
+		"currentvalue", //UTILITY || HISTORY CALC GOES HERE
+		"#N/A",
+		"#N/A",
+		`=H2/H$${finalRowCount-1}`,
+		"changepct", //UTILITY || HISTORY CALC GOES HERE
+		"dayp&l", //UTILITY || HISTORY CALC GOES HERE
+		"#N/A",
+		"#N/A",
+		"#N/A",
+		"#N/A",
+		"#N/A",
+		"Cash",
+	];
+
 	const horAligns: string[] = [
 		"left",
 		"left",
@@ -135,6 +157,7 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string, fi
 	legendRow.setValues([legend]);
 	portSumm.setValues([portSummVal]);
 	indexRow.setValues([inx]);
+	newSheet.getRange("A2:S2").setValues([cashRow]);
 
 	wholeSheet.setVerticalAlignment("middle");
 	wholeSheet.setFontFamily("Times New Roman");
@@ -152,13 +175,13 @@ function insertPortBase(newPortName: string, inCash: string, creDate: string, fi
 
 	//CONDITIONAL FORMATTING GOES HERE
 
-	for (let column = 1; column <= finalColumnCount; column++) {
-		newSheet.autoResizeColumn(column);
-	}
-
 	for (let row = 2; row <= finalRowCount; row++) {
 		newSheet.getRange(row, 1, 1, finalColumnCount).setNumberFormats([formats]);
 		newSheet.getRange(row, 1, 1, finalColumnCount).setHorizontalAlignments([horAligns]);
+	}
+
+	for (let column = 1; column <= finalColumnCount; column++) {
+		newSheet.autoResizeColumn(column);
 	}
 
 	for (let row = 1; row <= finalRowCount-2; row++) {

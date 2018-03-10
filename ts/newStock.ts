@@ -15,7 +15,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 
 	const newData: string[] = [
 		ticker,
-		"=GOOGLEFINANCE($A2, \"name\")",
+		"=GOOGLEFINANCE(A2, \"name\")",
 		date,
 		quantity,
 		priceOut,
@@ -24,7 +24,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		"=G2*D2",
 		"=H2/F2-1",
 		"=H2-F2",
-		`=H2/H$${sheet.getMaxRows()}`,
+		`=H2/H$${sheet.getMaxRows()-1}`,
 		"=GOOGLEFINANCE(A2, \"changepct\")",
 		"=GOOGLEFINANCE(A2, \"closeyest\")*L2*D2/100",
 		"=GOOGLEFINANCE(A2, \"high52\")",
@@ -37,7 +37,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 
 	sheet.insertRowBefore(2);
 	sheet.getRange("A2:S2").setValues([newData]);
-	sheet.getRange(2,1,1,19).setNumberFormats([formats]);
+	sheet.getRange(2,1,1,finalNewPortColumnCount).setNumberFormats([formats]);
 }
 
 function submitCheck(portName: string, ticker: string, dateStr: string, quantityStr: string, priceStr: string): void {
