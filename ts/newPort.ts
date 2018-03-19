@@ -13,17 +13,18 @@ function newPort(newPortName: string, initCash: string, creDate: string, intRate
 
 	if (!newPort.anyExist()) {
 		const histSheetName = newPort.sheetNames[SheetType.History];
+		const portName = newPort.name;
 		const portSumm52: string[] = [
 			`=MAX('${histSheetName}'!B2:B)`,
 			`=MIN('${histSheetName}'!B2:B)`,
 			"sparkline" //HISTORY CALC GOES HERE
 		];
 
-		insertPortBase(newPortName, initCash, creDate, finalPortRowCount);
-		insertHistory(newPortName, finalPortRowCount);
-		insertUtil(newPortName, intRate, compFreq);
-		ss.getSheetByName(newPortName).getRange(`N${finalPortRowCount-1}:P${finalPortRowCount-1}`).setValues([portSumm52]); //this is to refresh the 52week calculations
-		SpreadsheetApp.setActiveSheet(ss.getSheetByName(newPortName));
+		insertPortBase(portName, initCash, creDate, finalPortRowCount);
+		insertHistory(portName, finalPortRowCount);
+		insertUtil(portName, intRate, compFreq);
+		ss.getSheetByName(portName).getRange(`N${finalPortRowCount-1}:P${finalPortRowCount-1}`).setValues([portSumm52]); //this is to refresh the 52week calculations
+		SpreadsheetApp.setActiveSheet(ss.getSheetByName(newPort.sheetNameMap[SheetType.Main]));
 	}
 	else {
 		SpreadsheetApp.getUi().alert(`${newPortName} already exists`)
@@ -33,8 +34,8 @@ function newPort(newPortName: string, initCash: string, creDate: string, intRate
 
 function insertPortBase(newPortName: string, initCash: string, creDate: string, finalRowCount: number): void {
 	const port: Portfolio = new Portfolio(newPortName);
-
-	const newSheet: GSheets.Sheet = ss.insertSheet(port.sheetNameMap[SheetType.Main]);
+	const sheetName = port.sheetNameMap[SheetType.Main];
+	const newSheet: GSheets.Sheet = ss.insertSheet(sheetName);
 	const rowCount: number = newSheet.getMaxRows();
 	const columnCount: number = newSheet.getMaxColumns();
 	newSheet.deleteRows(finalRowCount, 1+rowCount-finalRowCount);
@@ -47,7 +48,7 @@ function insertPortBase(newPortName: string, initCash: string, creDate: string, 
 
 	const portSummVal: string[] = [
 		"Total",
-		newPortName,
+		sheetName,
 		creDate,
 		"#N/A",
 		"#N/A",
@@ -59,8 +60,8 @@ function insertPortBase(newPortName: string, initCash: string, creDate: string, 
 		`=H${finalRowCount-1}/H$${finalRowCount-1}`,
 		"day change", //UTILITY || HISTORY CALC GOES HERE
 		"=SUM(M1:M2)",
-		`=MAX('${newPortName} History'!B2:B)`,
-		`=MIN('${newPortName} History'!B2:B)`,
+		"",
+		"",
 		"sparkline", //HISTORY CALC GOES HERE
 		"#N/A",
 		"#N/A",
@@ -91,7 +92,7 @@ function insertPortBase(newPortName: string, initCash: string, creDate: string, 
 
 	const cashRow: string[] = [
 		"Cash",
-		`${newPortName} Cash`,
+		`${sheetName} Cash`,
 		creDate,
 		"#N/A",
 		"#N/A",
