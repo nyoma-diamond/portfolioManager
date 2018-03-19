@@ -22,11 +22,11 @@
 			<br /><br />
 
 			<script type="text/javascript" defer>
-			var portName;
-			var ticker;
-			var date;
-			var quantity;
-			var price;
+			let portName;
+			let ticker;
+			let date;
+			let quantity;
+			let price;
 
 			function submit() {
 				portName = document.getElementById("portName").value;
@@ -35,7 +35,13 @@
 				quantity = document.getElementById("quantity").value;
 				price = document.getElementById("price").value;
 
-				google.script.run.submitCheck(portName, ticker, date, quantity, price);
+				function onReturn(returnVal) {
+					if (returnVal == "CANCEL") {
+						google.script.host.close();
+					}
+				}
+
+				google.script.run.withSuccessHandler(onReturn).submitCheck(portName, ticker, date, quantity, price);
 			}
 
 			function clearInputs() {

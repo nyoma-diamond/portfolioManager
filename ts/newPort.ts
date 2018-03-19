@@ -12,8 +12,8 @@ function newPort(newPortName: string, initCash: string, creDate: string, intRate
 	const newPort: Portfolio = new Portfolio(newPortName);
 
 	if (!newPort.anyExist()) {
-		const histSheetName = newPort.sheetNames[SheetType.History];
-		const portName = newPort.name;
+		const histSheetName: string = newPort.sheetNames[SheetType.History];
+		const portName: string = newPort.name;
 		const portSumm52: string[] = [
 			`=MAX('${histSheetName}'!B2:B)`,
 			`=MIN('${histSheetName}'!B2:B)`,
@@ -34,7 +34,7 @@ function newPort(newPortName: string, initCash: string, creDate: string, intRate
 
 function insertPortBase(newPortName: string, initCash: string, creDate: string, finalRowCount: number): void {
 	const port: Portfolio = new Portfolio(newPortName);
-	const sheetName = port.sheetNameMap[SheetType.Main];
+	const sheetName: string = port.sheetNameMap[SheetType.Main];
 	const newSheet: GSheets.Sheet = ss.insertSheet(sheetName);
 	const rowCount: number = newSheet.getMaxRows();
 	const columnCount: number = newSheet.getMaxColumns();
@@ -174,8 +174,8 @@ function insertPortBase(newPortName: string, initCash: string, creDate: string, 
 }
 
 function insertHistory(newPortName: string, finalPortRowCount: number): void {
-	ss.insertSheet(`${newPortName} History`);
-	const newHist: GSheets.Sheet = ss.getSheetByName(`${newPortName} History`);
+	const port: Portfolio = new Portfolio(newPortName);
+	const newHist: GSheets.Sheet = ss.insertSheet(port.sheetNameMap[SheetType.History]);
 
 	const rowCount: number = newHist.getMaxRows();
 	const columnCount: number = newHist.getMaxColumns();
@@ -206,6 +206,6 @@ function insertHistory(newPortName: string, finalPortRowCount: number): void {
 }
 
 function insertUtil(newPortName: string, intRate: string, compFreq: string): void {
-	ss.insertSheet(`${newPortName} Utility`);
-	const newUtil: GSheets.Sheet = ss.getSheetByName(`${newPortName} Utility`);
+	const port: Portfolio = new Portfolio(newPortName);
+	const newUtil: GSheets.Sheet = ss.insertSheet(port.getSheetMap[SheetType.Utility]);
 }
