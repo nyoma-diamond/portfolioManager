@@ -1,7 +1,7 @@
 # portfolioManager
 This is a portfolio manager designed for Google Sheets using Google Apps Script.
 
-This program's express purpose is for the streamlining of stock portfolio tracking in Google Sheets through the use of either an add-on or the through the Google Apps Script editor.
+This program's express purpose is for the streamlining of stock market portfolio tracking in Google Sheets through the use of either a future add-on or through the Google Apps Script editor.
 
 This program is designed to be pushed to Google using `Clasp`. Click [here](https://github.com/google/clasp) to learn more about `Clasp`.
 
