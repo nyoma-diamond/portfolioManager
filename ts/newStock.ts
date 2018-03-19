@@ -8,8 +8,8 @@ function newStock(): void {
 }
 
 function newStockOutput(portName: string, ticker: string, date: string, quantity: string, price: string): void {
-	const sheet: GSheets.Sheet = ss.getSheetByName(portName);
-	SpreadsheetApp.setActiveSheet(sheet);
+	const port: Portfolio = new Portfolio(portName);
+	const sheet: GSheets.Sheet = port.getSheetMap()[SheetType.Main];
 
 	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2,\"price\",DATE(RIGHT(C2,4),LEFT(C2,2),MID(C2,4,2))),2,2)";
 
@@ -38,15 +38,17 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 	sheet.insertRowBefore(2);
 	sheet.getRange("A2:S2").setValues([newData]);
 	sheet.getRange(2,1,1,finalNewPortColumnCount).setNumberFormats([formats]);
+	ss.setActiveSheet(sheet);
 }
 
 function submitCheck(portName: string, ticker: string, dateStr: string, quantityStr: string, priceStr: string): void {
+	const port: Portfolio = new Portfolio(portName);
 	const date: number = Date.parse(dateStr);
 	const quantity: number = Number(quantityStr);
 	const price: number = Number(priceStr);
 	const validInputMap: object = { };
 
-	validInputMap[" Portfolio Name"] = checkSheetExist(portName);
+	validInputMap[" Portfolio Name"] = port.importantExist();
 	validInputMap[" Ticker"] = (ticker != "");
 	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "");
 	validInputMap[" Quantity"] = (quantity > 0 && quantityStr != "");
@@ -62,6 +64,9 @@ function submitCheck(portName: string, ticker: string, dateStr: string, quantity
 	if (badIn.length == 0) {
 		newStockOutput(portName, ticker, dateStr, quantityStr, priceStr);
 	}
+	/*else if (badIn.length == 1 && badIn[0] == " Portfolio Name") {
+		testAlert("no port");
+	}*/
 	else {
 		badInput(badIn);
 	}

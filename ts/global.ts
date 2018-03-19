@@ -18,50 +18,6 @@ function badInput(badIn: string[]) {
 	}
 }
 
-function deletePort(): void {
-	const ui: GBase.Ui = SpreadsheetApp.getUi();
-	let response: GBase.PromptResponse = ui.prompt("Delete Portfolio", "Enter which portfolio you wish to delete", ui.ButtonSet.OK_CANCEL);
-	let portName: string = response.getResponseText();
-	let histName: string = `${portName} History`;
-	let utilName: string = `${portName} Utility`;
-
-	if (response.getSelectedButton() == ui.Button.OK) {
-		deletePortConfirm(portName, histName, utilName);
-	}
-	else return;
-}
-
-function deletePortConfirm(portName: string, histName: string, utilName: string) {
-	const ui: GBase.Ui = SpreadsheetApp.getUi();
-	if (checkSheetExist(portName) || checkSheetExist(histName) || checkSheetExist(utilName)) {		
-		let confResponse: GBase.Button = ui.alert("WARNING", "You are about to permanently delete a portfolio. Are you sure?", ui.ButtonSet.OK_CANCEL);
-		if (confResponse == ui.Button.OK) {
-			const existsMap: object = { };
-
-			existsMap[`${portName}`] = checkSheetExist(portName);
-			existsMap[`${portName} History`] = checkSheetExist(histName);
-			existsMap[`${portName} Utility`] = checkSheetExist(utilName);
-
-			const toDelete: GSheets.Sheet[] = [];
-			for (let key in existsMap) {
-				if (existsMap[key]) {
-					toDelete.push(ss.getSheetByName(key));
-				}
-			}
-			for (let victim of toDelete) {
-				ss.deleteSheet(victim);
-			}
-		}
-	}
-	else {
-		const errorResponse: GBase.Button = ui.alert("Error", `${portName} doesn't exist`, ui.ButtonSet.OK_CANCEL)
-		if (errorResponse == ui.Button.OK) {
-			deletePort();
-		}
-		else return;
-	}
-}
-
 function testAlert(input: any): void {
 	SpreadsheetApp.getUi().alert(`Input is ${input}`);
 }
@@ -72,6 +28,36 @@ function checkSheetExist(nameIn: string): boolean {
 	}
 	else {
 		return true;
+	}
+}
+
+function deletePortConfirm(portName: string): void {
+	const ui: GBase.Ui = SpreadsheetApp.getUi();
+	const port: Portfolio = new Portfolio(portName);
+
+	if (port.anyExist()) {		
+		let confResponse: GBase.Button = ui.alert("WARNING", "You are about to permanently delete a portfolio. Are you sure?", ui.ButtonSet.OK_CANCEL);
+		if (confResponse == ui.Button.OK) {
+			for (let victim of port.getSheetArray()) {
+				ss.deleteSheet(victim);
+			}
+		}
+	}
+	else {
+		const errorResponse: GBase.Button = ui.alert("Error", `${portName} doesn't exist`, ui.ButtonSet.OK_CANCEL)
+		if (errorResponse == ui.Button.OK) {
+			deletePort();
+		}
+	}
+}
+
+function deletePort(): void {
+	const ui: GBase.Ui = SpreadsheetApp.getUi();
+	let response: GBase.PromptResponse = ui.prompt("Delete Portfolio", "Enter which portfolio you wish to delete", ui.ButtonSet.OK_CANCEL);
+	let portName: string = response.getResponseText();
+
+	if (response.getSelectedButton() == ui.Button.OK) {
+		deletePortConfirm(portName);
 	}
 }
 

@@ -9,11 +9,13 @@ function newPortBar(): void {
 
 function newPort(newPortName: string, initCash: string, creDate: string, intRate: string, compFreq: string): void {
 	const finalPortRowCount: number = 5;
+	const newPort: Portfolio = new Portfolio(newPortName);
 
-	if (!ss.getSheetByName(newPortName)) {
+	if (!newPort.anyExist()) {
+		const histSheetName = newPort.sheetNames[SheetType.History];
 		const portSumm52: string[] = [
-			`=MAX('${newPortName} History'!B2:B)`,
-			`=MIN('${newPortName} History'!B2:B)`,
+			`=MAX('${histSheetName}'!B2:B)`,
+			`=MIN('${histSheetName}'!B2:B)`,
 			"sparkline" //HISTORY CALC GOES HERE
 		];
 
@@ -30,9 +32,9 @@ function newPort(newPortName: string, initCash: string, creDate: string, intRate
 }
 
 function insertPortBase(newPortName: string, initCash: string, creDate: string, finalRowCount: number): void {
+	const port: Portfolio = new Portfolio(newPortName);
 
-	ss.insertSheet(newPortName);
-	const newSheet: GSheets.Sheet = ss.getSheetByName(newPortName);
+	const newSheet: GSheets.Sheet = ss.insertSheet(port.sheetNameMap[SheetType.Main]);
 	const rowCount: number = newSheet.getMaxRows();
 	const columnCount: number = newSheet.getMaxColumns();
 	newSheet.deleteRows(finalRowCount, 1+rowCount-finalRowCount);
