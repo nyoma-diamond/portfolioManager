@@ -52,9 +52,7 @@ class Portfolio {
 
 		for (let sheetName of this.sheetNames) {
 			const sheet: GSheets.Sheet = ss.getSheetByName(sheetName);
-			if (sheet) {
-				sheetArr.push(sheet);
-			}
+			if (sheet) sheetArr.push(sheet);
 		}
 		return sheetArr;
 	}
@@ -63,18 +61,15 @@ class Portfolio {
 		const sheets: SheetMap = this.getSheetMap();
 
 		for (let type in sheetExtensionMap) {
-			if (!sheets[type]) {
-				return false;
-			}
+			if (!sheets[type]) return false;
 		}
+
 		return true;
 	}
 
 	public importantExist(): boolean {
 		const sheets: SheetMap = this.getSheetMap();
-		if (sheets[SheetType.Main] && sheets[SheetType.History] && sheets[SheetType.Utility]) {
-			return true;
-		}
+		if (sheets[SheetType.Main] && sheets[SheetType.History] && sheets[SheetType.Utility]) return true;
 		return false;
 	}
 
@@ -82,9 +77,7 @@ class Portfolio {
 		const sheets: SheetMap = this.getSheetMap();
 
 		for (let type in sheetExtensionMap) {
-			if (sheets[type]) {
-				return true;
-			}
+			if (sheets[type]) return true;
 		}
 		return false;
 	}
