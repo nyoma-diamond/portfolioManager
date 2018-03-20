@@ -1,18 +1,13 @@
 /// <reference path ="./gNamespaces.ts" />
-function newStock(): void {
-	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newStockBar")
-			.setTitle("Portfolio Management")
-			.setWidth(300);
-	SpreadsheetApp.getUi()
-			.showSidebar(html);
+function newStockBar(): void {
+	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newStockBar").setTitle("Portfolio Management").setWidth(300);
+	SpreadsheetApp.getUi().showSidebar(html);
 }
 
 function newStockOutput(portName: string, ticker: string, date: string, quantity: string, price: string): void {
-	const sheet: GSheets.Sheet = ss.getSheetByName(portName);
-	SpreadsheetApp.setActiveSheet(sheet);
-
+	const port: Portfolio = new Portfolio(portName);
+	const sheet: GSheets.Sheet = port.getSheetMap()[SheetType.Main];
 	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2,\"price\",DATE(RIGHT(C2,4),LEFT(C2,2),MID(C2,4,2))),2,2)";
-
 	const newData: string[] = [
 		ticker,
 		"=GOOGLEFINANCE(A2, \"name\")",
@@ -37,32 +32,37 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 
 	sheet.insertRowBefore(2);
 	sheet.getRange("A2:S2").setValues([newData]);
-	sheet.getRange(2,1,1,finalNewPortColumnCount).setNumberFormats([formats]);
+	sheet.getRange(2,1,1,finalPortColumnCount).setNumberFormats([formats]);
+	ss.setActiveSheet(sheet);
 }
 
-function submitCheck(portName: string, ticker: string, dateStr: string, quantityStr: string, priceStr: string): void {
+function submitCheck(portName: string, ticker: string, dateStr: string, quantityStr: string, priceStr: string): void | string {
+	const port: Portfolio = new Portfolio(portName);
 	const date: number = Date.parse(dateStr);
 	const quantity: number = Number(quantityStr);
 	const price: number = Number(priceStr);
 	const validInputMap: object = { };
+	const badIn: string[] = [];
 
-	validInputMap[" Portfolio Name"] = checkSheetExist(portName);
+	validInputMap[" Portfolio Name"] = port.importantExist();
 	validInputMap[" Ticker"] = (ticker != "");
 	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "");
 	validInputMap[" Quantity"] = (quantity > 0 && quantityStr != "");
 	validInputMap[" Price"] = (price >= 0 && priceStr != "");
 
-	const badIn: string[] = [];
 	for (let key in validInputMap) {
-		if (!validInputMap[key]) {
-			badIn.push(key);
-		}
+		if (!validInputMap[key]) badIn.push(key);
 	}
 
-	if (badIn.length == 0) {
-		newStockOutput(portName, ticker, dateStr, quantityStr, priceStr);
+	if (badIn.length == 0) newStockOutput(portName, ticker, dateStr, quantityStr, priceStr);
+	else if (badIn.length == 1 && badIn[0] == " Portfolio Name") {
+		const ui: GBase.Ui = SpreadsheetApp.getUi();
+		const button: GBase.Button = ui.alert("Alert", `The portfolio "${port.name}" does not exist. Would you like to create a new one?`, ui.ButtonSet.YES_NO_CANCEL)
+
+		if (button === ui.Button.YES) {
+			newPortBar();
+		}
+		else return button.toString();
 	}
-	else {
-		badInput(badIn);
-	}
+	else badInput(badIn);
 }
