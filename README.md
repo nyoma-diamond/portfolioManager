@@ -27,9 +27,6 @@ Now that you have a spreadsheet to link the script to, open the Google Script Ed
 
 Now that the project is prepared you need to get the project ID so Clasp knows where to push to. In the Google Script Editor, go into the `File` menu and select `Project properties`. Once in `Project properties` find and copy the Script ID. Once you have the script ID, create a file called `.clasp.json` in your local `portfolioManager` directory containing `{"scriptId":"<your script id>"}`.
 
-### History setup
-> History setup method is tbd as when and how to record data is still an open question
-
 ## Pushing to Google
 Once you have created a project in Google Scripts and are ready to push your work to Google you can do so using `yarn tscpush` or `npm run-script tscpush` if not using `Yarn`. 
 
