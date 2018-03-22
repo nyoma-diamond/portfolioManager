@@ -199,7 +199,7 @@ function portSubmitCheck(newPortName: string, initCashStr: string, creDateStr: s
 
 	validInputMap[" Name"] = !port.anyExist();
 	validInputMap[" Initial Cash"] = (initCashStr != "" && initCash >= 0);
-	validInputMap[" Creation Date"] = (!isNaN(date) && creDateStr != "" && creDateStr.length != 4);
+	validInputMap[" Creation Date"] = (!isNaN(date) && creDateStr != "" && creDateStr.length != 4) && date < curDate && date > firstMarket;
 	validInputMap[" Interest Rate"] = (intRateStr != "" && intRate >= 0);
 	validInputMap[" Compounding Frequency"] = (compFreqStr != "" && compFreq >= 0);
 

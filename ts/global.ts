@@ -82,5 +82,6 @@ const horAligns: string[] = [
 	"right",
 	"left"
 ];
-const finalPortRowCount: number = 5;
 const finalPortColumnCount: number = legend.length;
+const finalPortRowCount: number = 5;
+const firstMarket = -4822502400000;

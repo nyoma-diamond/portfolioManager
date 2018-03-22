@@ -47,7 +47,7 @@ function stockSubmitCheck(portName: string, ticker: string, dateStr: string, qua
 
 	validInputMap[" Portfolio Name"] = port.importantExist();
 	validInputMap[" Ticker"] = (ticker != "");
-	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate);
+	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate && date > firstMarket);
 	validInputMap[" Quantity"] = (quantity > 0 && quantityStr != "");
 	validInputMap[" Price"] = (price >= 0 && priceStr != "");
 
