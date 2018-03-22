@@ -4,7 +4,7 @@ function newPortBar(): void {
 	SpreadsheetApp.getUi().showSidebar(html);
 }
 
-function newPort(newPortName: string, initCash: string, creDate: string, intRate: string, compFreq: string): void {
+function newPort(newPortName: string, creDate: string, initCash: string, intRate: string, compFreq: string): void {
 	const newPort: Portfolio = new Portfolio(newPortName);
 
 	if (!newPort.anyExist()) {
@@ -28,7 +28,7 @@ function newPort(newPortName: string, initCash: string, creDate: string, intRate
 	}
 }
 
-function insertPortBase(newPortName: string, initCash: string, creDate: string): void {
+function insertPortBase(newPortName: string, creDate: string, initCash: string): void {
 	const port: Portfolio = new Portfolio(newPortName);
 	const sheetName: string = port.sheetNameMap[SheetType.Main];
 	const newSheet: GSheets.Sheet = ss.insertSheet(sheetName); //Sheet insertion
@@ -186,3 +186,34 @@ function insertUtil(newPortName: string, intRate: string, compFreq: string): voi
 	const port: Portfolio = new Portfolio(newPortName);
 	const newUtil: GSheets.Sheet = ss.insertSheet(port.sheetNameMap[SheetType.Utility]);
 }
+
+function portSubmitCheck(newPortName: string, creDateStr: string, initCashStr: string, intRateStr: string, compFreqStr: string): void | string {
+	const port: Portfolio = new Portfolio(newPortName);
+	const initCash: number = Number(initCashStr);
+	const date: number = Date.parse(creDateStr);
+	const intRate: number = Number(intRateStr);
+	const compFreq: number = Number(compFreqStr);
+	const curDate: number = Date.now();
+	const validInputMap: object = { };
+	const badIn: string[] = [];
+
+	validInputMap["Portfolio Name"] = !port.anyExist();
+	validInputMap["Initial Cash"] = (initCashStr != "" && initCash >= 0);
+	validInputMap["Creation Date"] = (!isNaN(date) && creDateStr != "" && creDateStr.length != 4) && date < curDate && date > firstMarket;
+	validInputMap["Interest Rate"] = (intRateStr != "" && intRate >= 0);
+	validInputMap["Compounding Frequency"] = (compFreqStr != "" && compFreq >= 0);
+
+	for (let key in validInputMap) {
+		if (!validInputMap[key]) badIn.push(key);
+	}
+
+	if (badIn.length == 0) newPort(newPortName, initCashStr, creDateStr, intRateStr, compFreqStr);
+	else if (badIn.length == 1 && badIn[0] == "Portfolio Name") {
+		const ui: GBase.Ui = SpreadsheetApp.getUi();
+		const button: GBase.Button = ui.alert("Error", `"${port.name}" already exists.`, ui.ButtonSet.OK_CANCEL);
+
+		return button.toString();
+	}
+	else badInput(badIn);
+}
+
