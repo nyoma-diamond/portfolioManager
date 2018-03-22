@@ -22,20 +22,26 @@
 		<br /><br />
 
 		<script type="text/javascript" defer>
-			var newPortName;
-			var inCash;
-			var creDate;
-			var intRate;
-			var compFreq;
+			let newPortName;
+			let inCash;
+			let creDate;
+			let intRate;
+			let compFreq;
 
-			function runOutput() {
+			function submit() {
 				newPortName = document.getElementById("newPortName").value;
 				creDate = document.getElementById("creDate").value;
 				inCash = document.getElementById("inCash").value;
 				intRate = document.getElementById("intRate").value;
 				compFreq = document.getElementById("compFreq").value;
 
-				google.script.run.newPort(newPortName, inCash, creDate, intRate, compFreq);
+				function onReturn(returnVal) {
+					if (returnVal == "CANCEL") {
+						google.script.host.close();
+					}
+				}
+
+				google.script.run.withSuccessHandler(onReturn).portSubmitCheck(newPortName, initCash, creDate, intRate, compFreq);
 			}
 
 			function clearInputs() {
@@ -47,7 +53,7 @@
 			}
 		</script>
 
-		<input type="button" value="Submit" onClick="runOutput();" />
+		<input type="button" value="Submit" onClick="submit();" />
 		<input type="button" value="Reset" onClick="clearInputs();" />
 	</body>
 </html>
