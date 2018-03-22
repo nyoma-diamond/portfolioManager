@@ -186,3 +186,34 @@ function insertUtil(newPortName: string, intRate: string, compFreq: string): voi
 	const port: Portfolio = new Portfolio(newPortName);
 	const newUtil: GSheets.Sheet = ss.insertSheet(port.sheetNameMap[SheetType.Utility]);
 }
+
+function portSubmitCheck(newPortName: string, initCashStr: string, creDateStr: string, intRateStr: string, compFreqStr: string): void | string {
+	const port: Portfolio = new Portfolio(newPortName);
+	const initCash: number = Number(initCashStr);
+	const date: number = Date.parse(creDateStr);
+	const intRate: number = Number(intRateStr);
+	const compFreq: number = Number(compFreqStr);
+	const curDate: number = Date.now();
+	const validInputMap: object = { };
+	const badIn: string[] = [];
+
+	validInputMap[" Name"] = !port.anyExist();
+	validInputMap[" Initial Cash"];
+	validInputMap[" Creation Date"];
+	validInputMap[" Interest Rate"];
+	validInputMap[" Compounding Frequency"];
+
+	for (let key in validInputMap) {
+		if (!validInputMap[key]) badIn.push(key);
+	}
+
+	if (badIn.length == 0) newPort(newPortName, initCashStr, creDateStr, intRateStr, compFreqStr);
+	else if (badIn.length == 1 && badIn[0] == " Name") {
+		const ui: GBase.Ui = SpreadsheetApp.getUi();
+		const button: GBase.Button = ui.alert("Error", `The portfolio "${port.name}" already exists.`, ui.ButtonSet.OK_CANCEL);
+
+		return button.toString();
+	}
+	else badInput(badIn);
+}
+
