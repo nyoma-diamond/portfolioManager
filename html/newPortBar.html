@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<p>Portfolio Name:</p>
+		<p>Portfolio name:</p>
 		<input type="text" id="newPortName"> 
 		<br /><br />
 
-		<p>Portfolio Creation Date:</p>
+		<p>Portfolio creation date (dd/mm/yyyy):</p>
 		<input type="text" id="creDate"> 
 		<br /><br />
 		
 		<p>Initial Cash:</p>
-		<input type="number" id="inCash"> 
+		<input type="number" id="initCash"> 
 		<br /><br />
 		
 		<p>Yearly Interest Rate on Cash:<p>
@@ -23,7 +23,7 @@
 
 		<script type="text/javascript" defer>
 			let newPortName;
-			let inCash;
+			let initCash;
 			let creDate;
 			let intRate;
 			let compFreq;
@@ -31,7 +31,7 @@
 			function submit() {
 				newPortName = document.getElementById("newPortName").value;
 				creDate = document.getElementById("creDate").value;
-				inCash = document.getElementById("inCash").value;
+				initCash = document.getElementById("initCash").value;
 				intRate = document.getElementById("intRate").value;
 				compFreq = document.getElementById("compFreq").value;
 
@@ -41,13 +41,13 @@
 					}
 				}
 
-				google.script.run.withSuccessHandler(onReturn).portSubmitCheck(newPortName, initCash, creDate, intRate, compFreq);
+				google.script.run.withSuccessHandler(onReturn).portSubmitCheck(newPortName, creDate, initCash, intRate, compFreq);
 			}
 
 			function clearInputs() {
 				document.getElementById("newPortName").value = "";
 				document.getElementById("creDate").value = "";
-				document.getElementById("inCash").value = "";
+				document.getElementById("initCash").value = "";
 				document.getElementById("intRate").value = "";
 				document.getElementById("compFreq").value = "";
 			}
