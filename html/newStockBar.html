@@ -41,7 +41,7 @@
 					}
 				}
 
-				google.script.run.withSuccessHandler(onReturn).submitCheck(portName, ticker, date, quantity, price);
+				google.script.run.withSuccessHandler(onReturn).stockSubmitCheck(portName, ticker, date, quantity, price);
 			}
 
 			function clearInputs() {

@@ -36,7 +36,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 	ss.setActiveSheet(sheet);
 }
 
-function submitCheck(portName: string, ticker: string, dateStr: string, quantityStr: string, priceStr: string): void | string {
+function stockSubmitCheck(portName: string, ticker: string, dateStr: string, quantityStr: string, priceStr: string): void | string {
 	const port: Portfolio = new Portfolio(portName);
 	const date: number = Date.parse(dateStr);
 	const quantity: number = Number(quantityStr);
