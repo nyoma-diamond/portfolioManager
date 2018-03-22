@@ -12,7 +12,7 @@ function badInput(badIn: string[]) {
 	const ui: GBase.Ui = SpreadsheetApp.getUi();
 
 	if (badIn.length == 1) ui.alert("Error", `The following input was invalid:\n${badIn.toString()}`, ui.ButtonSet.OK);
-	else ui.alert("Error", `The following inputs were invalid:\n${badIn.toString()}`, ui.ButtonSet.OK);
+	else ui.alert("Error", `The following inputs were invalid:\n${badIn.join(", ")}`, ui.ButtonSet.OK);
 }
 
 function testAlert(input: any): void {
@@ -82,6 +82,6 @@ const horAligns: string[] = [
 	"right",
 	"left"
 ];
-const finalPortColumnCount: number = legend.length;
-const finalPortRowCount: number = 5;
-const firstMarket = -4822502400000;
+const finalPortColumnCount: number = legend.length; //Number of columns a new portfolio will have
+const finalPortRowCount: number = 5; //Number of rows a new portfolio will have
+const firstMarket = -4822502400000; //Unix timestamp for when NYSE first opened

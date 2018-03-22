@@ -45,18 +45,18 @@ function stockSubmitCheck(portName: string, ticker: string, dateStr: string, qua
 	const validInputMap: object = { };
 	const badIn: string[] = [];
 
-	validInputMap[" Portfolio Name"] = port.importantExist();
-	validInputMap[" Ticker"] = (ticker != "");
-	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate && date > firstMarket);
-	validInputMap[" Quantity"] = (quantity > 0 && quantityStr != "");
-	validInputMap[" Price"] = (price >= 0 && priceStr != "");
+	validInputMap["Portfolio Name"] = port.importantExist();
+	validInputMap["Ticker"] = (ticker != "");
+	validInputMap["Date Obtained"] = (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate && date > firstMarket);
+	validInputMap["Quantity"] = (quantity > 0 && quantityStr != "");
+	validInputMap["Price"] = (price >= 0 && priceStr != "");
 
 	for (let key in validInputMap) {
 		if (!validInputMap[key]) badIn.push(key);
 	}
 
 	if (badIn.length == 0) newStockOutput(portName, ticker, dateStr, quantityStr, priceStr);
-	else if (badIn.length == 1 && badIn[0] == " Portfolio Name") {
+	else if (badIn.length == 1 && badIn[0] == "Portfolio Name") {
 		const ui: GBase.Ui = SpreadsheetApp.getUi();
 		const button: GBase.Button = ui.alert("Alert", `The portfolio "${port.name}" does not exist. Would you like to create a new one?`, ui.ButtonSet.YES_NO_CANCEL);
 

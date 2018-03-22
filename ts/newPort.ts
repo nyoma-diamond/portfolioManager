@@ -197,20 +197,20 @@ function portSubmitCheck(newPortName: string, initCashStr: string, creDateStr: s
 	const validInputMap: object = { };
 	const badIn: string[] = [];
 
-	validInputMap[" Name"] = !port.anyExist();
-	validInputMap[" Initial Cash"] = (initCashStr != "" && initCash >= 0);
-	validInputMap[" Creation Date"] = (!isNaN(date) && creDateStr != "" && creDateStr.length != 4) && date < curDate && date > firstMarket;
-	validInputMap[" Interest Rate"] = (intRateStr != "" && intRate >= 0);
-	validInputMap[" Compounding Frequency"] = (compFreqStr != "" && compFreq >= 0);
+	validInputMap["Name"] = !port.anyExist();
+	validInputMap["Initial Cash"] = (initCashStr != "" && initCash >= 0);
+	validInputMap["Creation Date"] = (!isNaN(date) && creDateStr != "" && creDateStr.length != 4) && date < curDate && date > firstMarket;
+	validInputMap["Interest Rate"] = (intRateStr != "" && intRate >= 0);
+	validInputMap["Compounding Frequency"] = (compFreqStr != "" && compFreq >= 0);
 
 	for (let key in validInputMap) {
 		if (!validInputMap[key]) badIn.push(key);
 	}
 
 	if (badIn.length == 0) newPort(newPortName, initCashStr, creDateStr, intRateStr, compFreqStr);
-	else if (badIn.length == 1 && badIn[0] == " Name") {
+	else if (badIn.length == 1 && badIn[0] == "Name") {
 		const ui: GBase.Ui = SpreadsheetApp.getUi();
-		const button: GBase.Button = ui.alert("Error", `"${port.name}" already exists.`, ui.ButtonSet.OK_CANCEL);
+		const button: GBase.Button = ui.alert("Error", `The portfolio "${port.name}" already exists.`, ui.ButtonSet.OK_CANCEL);
 
 		return button.toString();
 	}
