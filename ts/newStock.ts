@@ -41,12 +41,13 @@ function stockSubmitCheck(portName: string, ticker: string, dateStr: string, qua
 	const date: number = Date.parse(dateStr);
 	const quantity: number = Number(quantityStr);
 	const price: number = Number(priceStr);
+	const curDate: number = Date.now();
 	const validInputMap: object = { };
 	const badIn: string[] = [];
 
 	validInputMap[" Portfolio Name"] = port.importantExist();
 	validInputMap[" Ticker"] = (ticker != "");
-	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "");
+	validInputMap[" Date Obtained"] = (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate);
 	validInputMap[" Quantity"] = (quantity > 0 && quantityStr != "");
 	validInputMap[" Price"] = (price >= 0 && priceStr != "");
 
