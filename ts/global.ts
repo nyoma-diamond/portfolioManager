@@ -1,7 +1,7 @@
 /// <reference path ="./gNamespaces.ts" />
 const ss: GSheets.Spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 
-function onOpen(): void {
+function onOpen(): void { 
 	const portManMen: GBase.Menu = SpreadsheetApp.getUi().createMenu("Portfolio Management");
 	portManMen.addItem("New Portfolio", "newPortBar").addToUi();
 	portManMen.addItem("New Stock", "newStockBar").addToUi();

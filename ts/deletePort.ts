@@ -6,8 +6,7 @@ function deletePortConfirm(portName: string): void {
 	if (port.anyExist()) {		
 		const confResponse: GBase.Button = ui.alert("WARNING", `You are about to permanently delete "${port.name}". Are you sure?`, ui.ButtonSet.OK_CANCEL);
 
-		if (confResponse == ui.Button.OK) {
-			
+		if (confResponse == ui.Button.OK) {	
 			for (let victim of port.getSheetArray()) {
 				ss.deleteSheet(victim);
 			}
