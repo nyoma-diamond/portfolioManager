@@ -11,8 +11,8 @@ function newPort(newPortName: string, creDate: string, initCash: string, intRate
 		const histSheetName: string = newPort.sheetNames[SheetType.History];
 		const portName: string = newPort.name;
 		const portSumm52: string[] = [
-			`=MAX('${histSheetName}'!B2:B)`,
-			`=MIN('${histSheetName}'!B2:B)`,
+			`=MAX('${histSheetName}'!B2:B)`, 
+			`=MIN('${histSheetName}'!B2:B)`, 
 			"sparkline" //HISTORY CALC GOES HERE
 		];
 
@@ -40,73 +40,73 @@ function insertPortBase(newPortName: string, creDate: string, initCash: string):
 	newSheet.deleteColumns(finalPortColumnCount+1, columnCount-finalPortColumnCount);
 	//Sheet prep END
 
-	const wholeSheet: GSheets.Range = newSheet.getRange(`A1:S${finalPortRowCount}`);
-	const legendRow: GSheets.Range = newSheet.getRange("A1:S1");
-	const bottom: GSheets.Range = newSheet.getRange(`A${finalPortRowCount-1}:S${finalPortRowCount}`);
-	const portSumm: GSheets.Range = newSheet.getRange(`A${finalPortRowCount-1}:S${finalPortRowCount-1}`);
-	const indexRow: GSheets.Range = newSheet.getRange(`A${finalPortRowCount}:S${finalPortRowCount}`);
+	const wholeSheet: GSheets.Range = newSheet.getRange(1, 1, finalPortRowCount, finalPortColumnCount);
+	const legendRow: GSheets.Range = newSheet.getRange(1, 1, 1, finalPortColumnCount);
+	const bottom: GSheets.Range = newSheet.getRange(finalPortRowCount-1, 1, finalPortRowCount, finalPortColumnCount);
+	const portSumm: GSheets.Range = newSheet.getRange(finalPortRowCount-1, 1, finalPortRowCount-1, finalPortColumnCount);
+	const indexRow: GSheets.Range = newSheet.getRange(finalPortRowCount, 1, finalPortRowCount, 1);
 	const portSummVal: string[] = [
-		"Total",
-		sheetName,
-		creDate,
-		"#N/A",
-		"#N/A",
-		initCash,
-		"#N/A",
-		"=SUM(H1:H2)",
-		`=H${finalPortRowCount-1}/F${finalPortRowCount-1}-1`,
-		`=H${finalPortRowCount-1}-F${finalPortRowCount-1}`,
-		`=H${finalPortRowCount-1}/H$${finalPortRowCount-1}`,
+		"Total", 
+		sheetName, 
+		creDate, 
+		"#N/A", 
+		"#N/A", 
+		initCash, 
+		"#N/A", 
+		"=SUM(H1:H2)", 
+		`=H${finalPortRowCount-1}/F${finalPortRowCount-1}-1`, 
+		`=H${finalPortRowCount-1}-F${finalPortRowCount-1}`, 
+		`=H${finalPortRowCount-1}/H$${finalPortRowCount-1}`, 
 		"day change", //UTILITY || HISTORY CALC GOES HERE
-		"=SUM(M1:M2)",
-		"high52",
-		"low52",
-		"sparkline",
-		"#N/A",
-		"#N/A",
+		"=SUM(M1:M2)", 
+		"high52", 
+		"low52", 
+		"sparkline", 
+		"#N/A", 
+		"#N/A", 
 		"Portfolio"
 	];
 	const inx: string[] = [
-		".INX",
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "name")`,
-		creDate,
-		`=F${finalPortRowCount-1}/E${finalPortRowCount}`,
-		`=INDEX(GOOGLEFINANCE(A${finalPortRowCount},"price",DATE(RIGHT(C${finalPortRowCount},4),LEFT(C${finalPortRowCount},2),MID(C${finalPortRowCount},4,2))),2,2)`,
-		`=D${finalPortRowCount}*E${finalPortRowCount}`,
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "price")`,
-		`=G${finalPortRowCount}*D${finalPortRowCount}`,
-		`=H${finalPortRowCount}/F${finalPortRowCount}-1`,
-		`=H${finalPortRowCount}-F${finalPortRowCount}`,
-		"#N/A",
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "changepct")`,
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "closeyest")*L${finalPortRowCount}*D${finalPortRowCount}/100`,
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "high52")`,
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "low52")`,
-		`=SPARKLINE(GOOGLEFINANCE(A${finalPortRowCount}, "price", TODAY()-365, TODAY(), \"WEEKLY\"))`,
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "eps")`,
-		`=GOOGLEFINANCE(A${finalPortRowCount}, "pe")`,
+		".INX", 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "name")`, 
+		creDate, 
+		`=F${finalPortRowCount-1}/E${finalPortRowCount}`, 
+		`=INDEX(GOOGLEFINANCE(A${finalPortRowCount}, "price", DATE(RIGHT(C${finalPortRowCount}, 4), LEFT(C${finalPortRowCount}, 2), MID(C${finalPortRowCount}, 4, 2))), 2, 2)`, 
+		`=D${finalPortRowCount}*E${finalPortRowCount}`, 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "price")`, 
+		`=G${finalPortRowCount}*D${finalPortRowCount}`, 
+		`=H${finalPortRowCount}/F${finalPortRowCount}-1`, 
+		`=H${finalPortRowCount}-F${finalPortRowCount}`, 
+		"#N/A", 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "changepct")`, 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "closeyest")*L${finalPortRowCount}*D${finalPortRowCount}/100`, 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "high52")`, 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "low52")`, 
+		`=SPARKLINE(GOOGLEFINANCE(A${finalPortRowCount}, "price", TODAY()-365, TODAY(), \"WEEKLY\"))`, 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "eps")`, 
+		`=GOOGLEFINANCE(A${finalPortRowCount}, "pe")`, 
 		"Index"
 	];
 	const cashRow: string[] = [
-		"Cash",
-		`${sheetName} Cash`,
-		creDate,
-		"#N/A",
-		"#N/A",
-		initCash,
-		"#N/A",
+		"Cash", 
+		`${sheetName} Cash`, 
+		creDate, 
+		"#N/A", 
+		"#N/A", 
+		initCash, 
+		"#N/A", 
 		"curval", //UTILITY || HISTORY CALC GOES HERE
-		"#N/A",
-		"#N/A",
-		`=H2/H$${finalPortRowCount-1}`,
+		"#N/A", 
+		"#N/A", 
+		`=H2/H$${finalPortRowCount-1}`, 
 		"changepct", //UTILITY || HISTORY CALC GOES HERE
 		"dayp&l", //UTILITY || HISTORY CALC GOES HERE
-		"#N/A",
-		"#N/A",
-		"#N/A",
-		"#N/A",
-		"#N/A",
-		"Cash",
+		"#N/A", 
+		"#N/A", 
+		"#N/A", 
+		"#N/A", 
+		"#N/A", 
+		"Cash", 
 	];
 
 	//Value pasting START
@@ -170,7 +170,7 @@ function insertHistory(newPortName: string): void {
 	topRow.setHorizontalAlignment("left");
 	topRow.setFontWeight("bold");
 	topRow.setNumberFormat("\"text\"");
-	curRow.setNumberFormats([["\"text\"", "\"$\"#,##0.00",  "\"$\"#,##0.00"]]);
+	curRow.setNumberFormats([["\"text\"", "\"$\"#,##0.00", "\"$\"#,##0.00"]]);
 	curRow.setHorizontalAlignment("right");
 
 	for (let column = 1; column <= 3; column++) {

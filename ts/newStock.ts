@@ -7,32 +7,32 @@ function newStockBar(): void {
 function newStockOutput(portName: string, ticker: string, date: string, quantity: string, price: string): void {
 	const port: Portfolio = new Portfolio(portName);
 	const sheet: GSheets.Sheet = port.getSheetMap()[SheetType.Main];
-	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2,\"price\",DATE(RIGHT(C2,4),LEFT(C2,2),MID(C2,4,2))),2,2)";
+	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2, \"price\", DATE(RIGHT(C2, 4), LEFT(C2, 2), MID(C2, 4, 2))), 2, 2)";
 	const newData: string[] = [
-		ticker,
-		"=GOOGLEFINANCE(A2, \"name\")",
-		date,
-		quantity,
-		priceOut,
-		"=D2*E2",
-		"=GOOGLEFINANCE(A2, \"price\")",
-		"=G2*D2",
-		"=H2/F2-1",
-		"=H2-F2",
-		`=H2/H$${sheet.getMaxRows()-1}`,
-		"=GOOGLEFINANCE(A2, \"changepct\")",
-		"=GOOGLEFINANCE(A2, \"closeyest\")*L2*D2/100",
-		"=GOOGLEFINANCE(A2, \"high52\")",
-		"=GOOGLEFINANCE(A2, \"low52\")",
-		"=SPARKLINE(GOOGLEFINANCE(A2, \"price\", TODAY()-365, TODAY(), \"WEEKLY\"))",
-		"=GOOGLEFINANCE(A2, \"eps\")",
-		"=GOOGLEFINANCE(A2, \"pe\")",
+		ticker, 
+		"=GOOGLEFINANCE(A2, \"name\")", 
+		date, 
+		quantity, 
+		priceOut, 
+		"=D2*E2", 
+		"=GOOGLEFINANCE(A2, \"price\")", 
+		"=G2*D2", 
+		"=H2/F2-1", 
+		"=H2-F2", 
+		`=H2/H$${sheet.getMaxRows()-1}`, 
+		"=GOOGLEFINANCE(A2, \"changepct\")", 
+		"=GOOGLEFINANCE(A2, \"closeyest\")*L2*D2/100", 
+		"=GOOGLEFINANCE(A2, \"high52\")", 
+		"=GOOGLEFINANCE(A2, \"low52\")", 
+		"=SPARKLINE(GOOGLEFINANCE(A2, \"price\", TODAY()-365, TODAY(), \"WEEKLY\"))", 
+		"=GOOGLEFINANCE(A2, \"eps\")", 
+		"=GOOGLEFINANCE(A2, \"pe\")", 
 		"Sector" //SECTOR LOOKUP GOES HERE
 	];
 
 	sheet.insertRowBefore(2);
 	sheet.getRange("A2:S2").setValues([newData]);
-	sheet.getRange(2,1,1,finalPortColumnCount).setNumberFormats([formats]);
+	sheet.getRange(2, 1, 1, finalPortColumnCount).setNumberFormats([formats]);
 	ss.setActiveSheet(sheet);
 }
 

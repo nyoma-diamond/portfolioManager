@@ -19,7 +19,7 @@ function recordHistory(histSheet: GSheets.Sheet): void {
 
 	const rowCount: number = histSheet.getMaxRows();
 
-	if (rowCount > 366) histSheet.deleteRows(367,rowCount-366);
+	if (rowCount > 366) histSheet.deleteRows(367, rowCount-366);
 }
 
 function recordAllHistory(): void {

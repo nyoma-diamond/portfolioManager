@@ -3,11 +3,11 @@ type SheetMap = {[type: string]: GSheets.Sheet;};
 type SheetNameMap = {[type: string]: string;};
 
 enum SheetType {
-	Main = "Main",
-	History = "History",
-	Utility = "Utility",
-	Sector = "Sector",
-	Stock = "Stock",
+	Main = "Main", 
+	History = "History", 
+	Utility = "Utility", 
+	Sector = "Sector", 
+	Stock = "Stock", 
 	SP500 = "SP500"
 }
 
