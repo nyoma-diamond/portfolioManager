@@ -25,7 +25,7 @@ Unfortunately there is no way to create a project in Google Scripts and link a s
 
 Now that you have a spreadsheet to link the script to, open the Google Script Editor using `alt+T+E` or by going into the `Tools` menu and clicking `Script Editor`. Once in the Google Script Editor, you must set a name for the project (we recommend "portfolioManager" for consistency) and save it.
 
-Now that the project is prepared you need to get the project ID so Clasp knows where to push to. In the Google Script Editor, go into the `File` menu and select `Project properties`. Once in `Project properties` find and copy the Script ID. Once you have the script ID, create a file called `.clasp.json` in your local `portfolioManager` directory containing `{"scriptId":"<your script id>"}`.
+Now that the project is prepared you need to get the project ID so `Clasp` knows where to push to. In the Google Script Editor, go into the `File` menu and select `Project properties`. Once in `Project properties` find and copy the Script ID. Once you have the script ID, create a file called `.clasp.json` in your local `portfolioManager` directory containing `{"scriptId":"<your script id>"}`.
 
 ## Pushing to Google
 Once you have created a project in Google Scripts and are ready to push your work to Google you can do so using `yarn tscpush` or `npm run-script tscpush` if not using `Yarn`. 
