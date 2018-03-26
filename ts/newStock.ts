@@ -7,6 +7,7 @@ function newStockBar(): void {
 function newStockOutput(portName: string, ticker: string, date: string, quantity: string, price: string): void {
 	const port: Portfolio = new Portfolio(portName);
 	const sheet: GSheets.Sheet = port.getSheetMap()[SheetType.Main];
+	const company = JSON.parse(UrlFetchApp.fetch("https://api.iextrading.com/1.0/stock/" + ticker + "/company", {"muteHttpExceptions": true}).getContentText());
 	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2, \"price\", DATE(RIGHT(C2, 4), LEFT(C2, 2), MID(C2, 4, 2))), 2, 2)";
 	const newData: string[] = [
 		ticker, 
@@ -27,7 +28,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		"=SPARKLINE(GOOGLEFINANCE(A2, \"price\", TODAY()-365, TODAY(), \"WEEKLY\"))", 
 		"=GOOGLEFINANCE(A2, \"eps\")", 
 		"=GOOGLEFINANCE(A2, \"pe\")", 
-		"Sector" //SECTOR LOOKUP GOES HERE
+		company.sector
 	];
 
 	sheet.insertRowBefore(2);
