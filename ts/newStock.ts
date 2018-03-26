@@ -1,6 +1,7 @@
 /// <reference path ="./gNamespaces.ts" />
 function newStockBar(): void {
 	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newStockBar").setTitle("Portfolio Management").setWidth(300);
+	
 	SpreadsheetApp.getUi().showSidebar(html);
 }
 
@@ -62,10 +63,7 @@ function stockSubmitCheck(portName: string, ticker: string, dateStr: string, qua
 		const ui: GBase.Ui = SpreadsheetApp.getUi();
 		const button: GBase.Button = ui.alert("Alert", `The portfolio "${port.name}" does not exist. Would you like to create a new one?`, ui.ButtonSet.YES_NO_CANCEL);
 
-		if (button === ui.Button.YES) {
-			newPortBar();
-		}
-		else return button.toString();
+		return button.toString();
 	}
 	else badInput(badIn);
 }

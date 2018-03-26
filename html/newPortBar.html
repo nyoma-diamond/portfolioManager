@@ -36,9 +36,7 @@
 				compFreq = document.getElementById("compFreq").value;
 
 				function onReturn(returnVal) {
-					if (returnVal == "CANCEL") {
-						google.script.host.close();
-					}
+					if (returnVal == "CANCEL") google.script.host.close();
 				}
 
 				google.script.run.withSuccessHandler(onReturn).portSubmitCheck(newPortName, creDate, initCash, intRate, compFreq);

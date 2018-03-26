@@ -36,9 +36,8 @@
 				price = document.getElementById("price").value;
 
 				function onReturn(returnVal) {
-					if (returnVal == "CANCEL") {
-						google.script.host.close();
-					}
+					if (returnVal == "CANCEL") google.script.host.close();
+					else if (returnVal == "YES") google.script.run.newPortBar();
 				}
 
 				google.script.run.withSuccessHandler(onReturn).stockSubmitCheck(portName, ticker, date, quantity, price);

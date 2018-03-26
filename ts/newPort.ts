@@ -1,6 +1,7 @@
 /// <reference path ="./gNamespaces.ts" />
 function newPortBar(): void {
 	const html: GHtml.HtmlOutput = HtmlService.createHtmlOutputFromFile("html/newPortBar").setTitle("Portfolio Management").setWidth(300);
+	
 	SpreadsheetApp.getUi().showSidebar(html);
 }
 
