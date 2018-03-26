@@ -42,9 +42,9 @@ function insertPortBase(newPortName: string, creDate: string, initCash: string):
 
 	const wholeSheet: GSheets.Range = newSheet.getRange(1, 1, finalPortRowCount, finalPortColumnCount);
 	const legendRow: GSheets.Range = newSheet.getRange(1, 1, 1, finalPortColumnCount);
-	const bottom: GSheets.Range = newSheet.getRange(finalPortRowCount-1, 1, finalPortRowCount, finalPortColumnCount);
-	const portSumm: GSheets.Range = newSheet.getRange(finalPortRowCount-1, 1, finalPortRowCount-1, finalPortColumnCount);
-	const indexRow: GSheets.Range = newSheet.getRange(finalPortRowCount, 1, finalPortRowCount, 1);
+	const bottom: GSheets.Range = newSheet.getRange(finalPortRowCount-1, 1, 2, finalPortColumnCount);
+	const portSumm: GSheets.Range = newSheet.getRange(finalPortRowCount-1, 1, 1, finalPortColumnCount);
+	const indexRow: GSheets.Range = newSheet.getRange(finalPortRowCount, 1, 1, finalPortColumnCount);
 	const portSummVal: string[] = [
 		"Total", 
 		sheetName, 
