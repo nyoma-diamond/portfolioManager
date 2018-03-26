@@ -44,9 +44,10 @@ function stockSubmitCheck(portName: string, ticker: string, dateStr: string, qua
 	const curDate: number = Date.now();
 	const validInputMap: object = { };
 	const badIn: string[] = [];
+	const tickLookup: GoogleAppsScript.URL_Fetch.HTTPResponse = UrlFetchApp.fetch("https://api.iextrading.com/1.0/stock/" + ticker + "/company", {"muteHttpExceptions": true});
 
 	validInputMap["Portfolio Name"] = port.importantExist();
-	validInputMap["Ticker"] = (ticker != "");
+	validInputMap["Ticker"] = (tickLookup.getResponseCode() != 404);
 	validInputMap["Date Obtained"] = (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate && date > firstMarket);
 	validInputMap["Quantity"] = (quantity > 0 && quantityStr != "");
 	validInputMap["Price"] = (price >= 0 && priceStr != "");
