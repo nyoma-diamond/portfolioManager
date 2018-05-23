@@ -44,6 +44,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 }
 
 function stockSubmitCheck(portName: string, ticker: string, dateStr: string, quantityStr: string, priceStr: string): void | string {
+	const ui: GBase.Ui = SpreadsheetApp.getUi();
 	const port: Portfolio = new Portfolio(portName);
 	const date: number = Date.parse(dateStr);
 	const quantity: number = Number(quantityStr);
@@ -52,23 +53,31 @@ function stockSubmitCheck(portName: string, ticker: string, dateStr: string, qua
 	const validInputMap: object = { };
 	const badIn: string[] = [];
 	const tickLookup: GUrl.HTTPResponse = UrlFetchApp.fetch(`https://api.iextrading.com/1.0/stock/${ticker}/company`, {"muteHttpExceptions": true});
-
-	validInputMap["Portfolio Name"] = port.importantExist();
-	validInputMap["Ticker"] = (tickLookup.getResponseCode() != 404);
-	validInputMap["Date Obtained"] = (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate && date > firstMarket);
-	validInputMap["Quantity"] = (quantity > 0 && quantityStr != "");
-	validInputMap["Price"] = (price >= 0 && priceStr != "");
+	
+	validInputMap["Portfolio Name"] = [portName, port.importantExist()];
+	validInputMap["Ticker"] = [ticker, (tickLookup.getResponseCode() != 404)];
+	validInputMap["Date Obtained"] = [dateStr, (!isNaN(date) && dateStr != "" && dateStr.length != 4 && date < curDate && date > firstMarket)];
+	validInputMap["Quantity"] = [quantityStr, (quantity > 0 && quantityStr != "")];
+	validInputMap["Price"] = [priceStr, (price >= 0 && priceStr != "")];
 
 	for (let key in validInputMap) {
-		if (!validInputMap[key]) badIn.push(key);
+		if (!validInputMap[key][1]) badIn.push(key);
 	}
 
-	if (badIn.length == 0) newStockOutput(portName, ticker, dateStr, quantityStr, priceStr);
+	if (badIn.length == 0) {
+			let inputsAsString = "| ";
+		
+		for (let key in validInputMap) {
+			inputsAsString += key + ": " + validInputMap[key][0] + " | "; // figure out a better way to do this (\n somehow?)
+		}
+		
+		const button: GBase.Button = ui.alert("Please Confirm", inputsAsString, ui.ButtonSet.YES_NO);
+		
+		if (button == ui.Button.YES) newStockOutput(portName, ticker, dateStr, quantityStr, priceStr);
+	}
 	else if (badIn.length == 1 && badIn[0] == "Portfolio Name") {
-		const ui: GBase.Ui = SpreadsheetApp.getUi();
-		const button: GBase.Button = ui.alert("Alert", `The portfolio "${port.name}" does not exist. Would you like to create a new one?`, ui.ButtonSet.YES_NO_CANCEL);
-
-		return button.toString();
+		const newPortButton: GBase.Button = ui.alert("Alert", `The portfolio "${port.name}" does not exist. Would you like to create a new one?`, ui.ButtonSet.YES_NO_CANCEL);
+		return newPortButton.toString();
 	}
 	else badInput(badIn);
 }
