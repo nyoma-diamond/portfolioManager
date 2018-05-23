@@ -8,6 +8,9 @@ function newStockBar(): void {
 function newStockOutput(portName: string, ticker: string, date: string, quantity: string, price: string): void {
 	const port: Portfolio = new Portfolio(portName);
 	const sheet: GSheets.Sheet = port.getSheetMap()[SheetType.Main];
+	const sheetRows: number = sheet.getMaxRows();
+	const initCashAddress: GSheets.Range = sheet.getRange(sheetRows-3, 8);
+	const initCash: number = parseInt(initCashAddress.getValue().toString(), 10);
 	const company = JSON.parse(UrlFetchApp.fetch(`https://api.iextrading.com/1.0/stock/${ticker}/company`, {"muteHttpExceptions": true}).getContentText());
 	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2, \"price\", DATE(RIGHT(C2, 4), LEFT(C2, 2), MID(C2, 4, 2))), 2, 2)";
 	const newData: string[] = [
@@ -21,7 +24,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		"=G2*D2", 
 		"=H2/F2-1", 
 		"=H2-F2", 
-		`=H2/H$${sheet.getMaxRows()}`, 
+		`=H2/H$${sheetRows}`, 
 		"=GOOGLEFINANCE(A2, \"changepct\")", 
 		"=GOOGLEFINANCE(A2, \"closeyest\")*L2*D2/100", 
 		"=GOOGLEFINANCE(A2, \"high52\")", 
@@ -32,8 +35,9 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		company.sector
 	];
 
+	initCashAddress.setValue(initCash-parseInt(price));
 	sheet.insertRowBefore(2);
-	sheet.getRange("A2:S2").setValues([newData]);
+	sheet.getRange(2, 1, 1, finalPortColumnCount).setValues([newData]);
 	sheet.getRange(2, 1, 1, finalPortColumnCount).setNumberFormats([formats]);
 	ss.setActiveSheet(sheet);
 }
