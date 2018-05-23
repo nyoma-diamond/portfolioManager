@@ -10,7 +10,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 	const sheet: GSheets.Sheet = port.getSheetMap()[SheetType.Main];
 	const sheetRows: number = sheet.getMaxRows();
 	const initCashAddress: GSheets.Range = sheet.getRange(sheetRows-3, 8);
-	const initCash: number = parseInt(initCashAddress.getValue().toString(), 10);
+	const initCash: number = Number(initCashAddress.getValue().toString());
 	const company = JSON.parse(UrlFetchApp.fetch(`https://api.iextrading.com/1.0/stock/${ticker}/company`, {"muteHttpExceptions": true}).getContentText());
 	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2, \"price\", DATE(RIGHT(C2, 4), LEFT(C2, 2), MID(C2, 4, 2))), 2, 2)";
 	const newData: string[] = [

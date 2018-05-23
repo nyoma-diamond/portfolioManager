@@ -9,7 +9,7 @@ function newPort(newPortName: string, creDate: string, initCash: string, intRate
 	const newPort: Portfolio = new Portfolio(newPortName);
 
 	if (!newPort.anyExist()) {
-		const histSheetName: string = newPort.sheetNames[SheetType.History];
+		const histSheetName: string = newPort.sheetNameMap[SheetType.History];
 		const portName: string = newPort.name;
 		const portSumm52: string[] = [
 			`=MAX('${histSheetName}'!B2:B)`, 

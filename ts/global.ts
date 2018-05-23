@@ -5,6 +5,8 @@ function onOpen(): void {
 	const portManMen: GBase.Menu = SpreadsheetApp.getUi().createMenu("Portfolio Management");
 	portManMen.addItem("New Portfolio", "newPortBar").addToUi();
 	portManMen.addItem("New Stock", "newStockBar").addToUi();
+	portManMen.addItem("Add Cash", "addCash").addToUi();
+	portManMen.addItem("Subtract Cash", "subtractCash").addToUi();
 	portManMen.addItem("Delete Portfolio", "deletePort").addToUi();
 }
 
