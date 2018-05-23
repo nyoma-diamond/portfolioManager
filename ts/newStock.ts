@@ -12,6 +12,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 	const initCashAddress: GSheets.Range = sheet.getRange(sheetRows-3, 8);
 	const initCash: number = Number(initCashAddress.getValue().toString());
 	const company = JSON.parse(UrlFetchApp.fetch(`https://api.iextrading.com/1.0/stock/${ticker}/company`, {"muteHttpExceptions": true}).getContentText());
+	const compSector: string = (company.sector != "") ? company.sector : "#N/A";
 	const priceOut: string = (price != "0") ? price : "=INDEX(GOOGLEFINANCE(A2, \"price\", DATE(RIGHT(C2, 4), LEFT(C2, 2), MID(C2, 4, 2))), 2, 2)";
 	const newData: string[] = [
 		ticker, 
@@ -32,7 +33,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		"=SPARKLINE(GOOGLEFINANCE(A2, \"price\", TODAY()-365, TODAY(), \"WEEKLY\"))", 
 		"=GOOGLEFINANCE(A2, \"eps\")", 
 		"=GOOGLEFINANCE(A2, \"pe\")", 
-		company.sector
+		compSector
 	];
 
 	initCashAddress.setValue(initCash-parseInt(price)*parseInt(quantity));
