@@ -14,7 +14,7 @@ function deletePortConfirm(portName: string): void {
 		else return;
 	}
 	else {
-		const errResponse: GBase.Button = ui.alert("Error", `${port.name} doesn't exist`, ui.ButtonSet.OK_CANCEL);
+		const errResponse: GBase.Button = ui.alert("Error", `"${port.name}" doesn't exist`, ui.ButtonSet.OK_CANCEL);
 
 		if (errResponse == ui.Button.OK) {
 			deletePort();
@@ -25,7 +25,7 @@ function deletePortConfirm(portName: string): void {
 
 function deletePort(): void {
 	const ui: GBase.Ui = SpreadsheetApp.getUi();
-	const response: GBase.PromptResponse = ui.prompt("Delete Portfolio", "Enter which portfolio you wish to delete", ui.ButtonSet.OK_CANCEL);
+	const response: GBase.PromptResponse = ui.prompt("Delete Portfolio", "Enter which portfolio you wish to delete:", ui.ButtonSet.OK_CANCEL);
 
 	if (response.getSelectedButton() == ui.Button.OK) deletePortConfirm(response.getResponseText());
 }
