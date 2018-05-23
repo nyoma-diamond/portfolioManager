@@ -21,7 +21,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		"=G2*D2", 
 		"=H2/F2-1", 
 		"=H2-F2", 
-		`=H2/H$${sheet.getMaxRows()-1}`, 
+		`=H2/H$${sheet.getMaxRows()}`, 
 		"=GOOGLEFINANCE(A2, \"changepct\")", 
 		"=GOOGLEFINANCE(A2, \"closeyest\")*L2*D2/100", 
 		"=GOOGLEFINANCE(A2, \"high52\")", 
