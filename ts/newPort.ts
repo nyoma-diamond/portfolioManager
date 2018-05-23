@@ -96,12 +96,12 @@ function insertPortBase(newPortName: string, creDate: string, initCash: string):
 		"#N/A", 
 		initCash, 
 		"#N/A", 
-		"curval", //UTILITY || HISTORY CALC GOES HERE
+		initCash, //UTILITY || HISTORY CALC GOES HERE FOR INTEREST (initCash is placeholder)
 		"#N/A", 
 		"#N/A", 
 		`=H2/H$${finalPortRowCount-1}`, 
-		"changepct", //UTILITY || HISTORY CALC GOES HERE
-		"dayp&l", //UTILITY || HISTORY CALC GOES HERE
+		"changepct", //UTILITY || HISTORY CALC GOES HERE FOR INTEREST
+		"dayp&l", //UTILITY || HISTORY CALC GOES HERE FOR INTEREST
 		"#N/A", 
 		"#N/A", 
 		"#N/A", 

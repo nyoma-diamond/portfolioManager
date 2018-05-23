@@ -35,7 +35,7 @@ function newStockOutput(portName: string, ticker: string, date: string, quantity
 		company.sector
 	];
 
-	initCashAddress.setValue(initCash-parseInt(price));
+	initCashAddress.setValue(initCash-parseInt(price)*parseInt(quantity));
 	sheet.insertRowBefore(2);
 	sheet.getRange(2, 1, 1, finalPortColumnCount).setValues([newData]);
 	sheet.getRange(2, 1, 1, finalPortColumnCount).setNumberFormats([formats]);
