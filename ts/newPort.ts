@@ -5,30 +5,6 @@ function newPortBar(): void {
 	SpreadsheetApp.getUi().showSidebar(html);
 }
 
-function newPort(newPortName: string, creDate: string, initCash: string, intRate: string, compFreq: string): void {
-	const newPort: Portfolio = new Portfolio(newPortName);
-
-	if (!newPort.anyExist()) {
-		const histSheetName: string = newPort.sheetNameMap[SheetType.History];
-		const portName: string = newPort.name;
-		const portSumm52: string[] = [
-			`=MAX('${histSheetName}'!B2:B)`, 
-			`=MIN('${histSheetName}'!B2:B)`, 
-			"sparkline" //HISTORY CALC GOES HERE
-		];
-
-		insertPortBase(portName, initCash, creDate);
-		insertHistory(portName);
-		insertUtil(portName, intRate, compFreq);
-		ss.getSheetByName(portName).getRange(`N${finalPortRowCount-1}:P${finalPortRowCount-1}`).setValues([portSumm52]); //this is to refresh the 52week calculations
-		SpreadsheetApp.setActiveSheet(ss.getSheetByName(newPort.sheetNameMap[SheetType.Main]));
-	}
-	else {
-		SpreadsheetApp.getUi().alert(`${newPortName} already exists`)
-		return;
-	}
-}
-
 function insertPortBase(newPortName: string, creDate: string, initCash: string): void {
 	const port: Portfolio = new Portfolio(newPortName);
 	const sheetName: string = port.sheetNameMap[SheetType.Main];
@@ -188,6 +164,30 @@ function insertUtil(newPortName: string, intRate: string, compFreq: string): voi
 	const newUtil: GSheets.Sheet = ss.insertSheet(port.sheetNameMap[SheetType.Utility]);
 }
 
+function newPort(newPortName: string, creDate: string, initCash: string, intRate: string, compFreq: string): void {
+	const newPort: Portfolio = new Portfolio(newPortName);
+
+	if (!newPort.anyExist()) {
+		const histSheetName: string = newPort.sheetNameMap[SheetType.History];
+		const portName: string = newPort.name;
+		const portSumm52: string[] = [
+			`=MAX('${histSheetName}'!B2:B)`, 
+			`=MIN('${histSheetName}'!B2:B)`, 
+			"sparkline" //HISTORY CALC GOES HERE
+		];
+
+		insertPortBase(portName, creDate, initCash);
+		insertHistory(portName);
+		insertUtil(portName, intRate, compFreq);
+		ss.getSheetByName(portName).getRange(`N${finalPortRowCount-1}:P${finalPortRowCount-1}`).setValues([portSumm52]); //this is to refresh the 52week calculations
+		SpreadsheetApp.setActiveSheet(ss.getSheetByName(newPort.sheetNameMap[SheetType.Main]));
+	}
+	else {
+		SpreadsheetApp.getUi().alert(`${newPortName} already exists`)
+		return;
+	}
+}
+
 function portSubmitCheck(newPortName: string, creDateStr: string, initCashStr: string, intRateStr: string, compFreqStr: string): void | string {
 	const ui: GBase.Ui = SpreadsheetApp.getUi();
 	const port: Portfolio = new Portfolio(newPortName);
@@ -218,7 +218,7 @@ function portSubmitCheck(newPortName: string, creDateStr: string, initCashStr: s
 		
 		const button: GBase.Button = ui.alert("Please Confirm", inputsAsString, ui.ButtonSet.YES_NO);
 		
-		if (button == ui.Button.YES) newPort(newPortName, initCashStr, creDateStr, intRateStr, compFreqStr);
+		if (button == ui.Button.YES) newPort(newPortName, creDateStr, initCashStr, intRateStr, compFreqStr);
 	}
 	else if (badIn.length == 1 && badIn[0] == "Portfolio Name") {
 		const button: GBase.Button = ui.alert("Error", `"${port.name}" already exists.`, ui.ButtonSet.OK_CANCEL);
